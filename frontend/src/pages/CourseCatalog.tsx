@@ -37,14 +37,15 @@ const CourseCatalog = () => {
 
       <Container>
         <SpaceBetween size="m">
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <Input
-              value={searchQuery}
-              onChange={({ detail }) => setSearchQuery(detail.value)}
-              placeholder="Search courses by name, code, or instructor..."
-              type="search"
-              style={{ flexGrow: 1 }}
-            />
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+            <div style={{ flexGrow: 1 }}>
+              <Input
+                value={searchQuery}
+                onChange={({ detail }) => setSearchQuery(detail.value)}
+                placeholder="Search courses by name, code, or instructor..."
+                type="search"
+              />
+            </div>
             <Button onClick={handleSearch} variant="primary" loading={loading}>
               Search
             </Button>
