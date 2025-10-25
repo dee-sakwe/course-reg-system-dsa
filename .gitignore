@@ -270,3 +270,6 @@ frontend/.vite
 
 # Local
 .local
+
+# others
+others.txt
