@@ -7,6 +7,7 @@ const Navigation = () => {
 
   const navItems: SideNavigationProps['items'] = [
     { type: 'link', text: 'Dashboard', href: '/' },
+    { type: 'link', text: 'Accept/Pay Fees', href: '/fees' },
     { type: 'link', text: 'Course Catalog', href: '/courses' },
     { type: 'link', text: 'My Schedule', href: '/schedule' },
     { type: 'divider' },
@@ -20,7 +21,7 @@ const Navigation = () => {
   return (
     <SideNavigation
       activeHref={location.pathname}
-      header={{ text: 'Course Registration', href: '/' }}
+      header={{ text: 'BannerWeb', href: '/' }}
       items={navItems}
       onFollow={(event) => {
         if (!event.detail.external) {
