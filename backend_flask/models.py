@@ -6,18 +6,28 @@ db = SQLAlchemy()
 class Student(db.Model):
     __tablename__ = 'students'
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.String(15), nullable=False) # Compulsory
-    student_name = db.Column(db.String(100), nullable=True)
+    student_id = db.Column(db.String(15), nullable=False) 
+    student_name = db.Column(db.String(100), nullable=False)
+    student_email = db.Column(db.String(100), nullable=False)
+    major = db.Column(db.String(100), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
 
-    def __init__(self, student_id, student_name):
+
+    def __init__(self, student_id, student_name, student_email, major, year):
         self.student_id = student_id
         self.student_name = student_name
+        self.student_email = student_email
+        self.major = major
+        self.year = year
     
     def json(self):
         return {
             'id': self.id,
-            'student_name': self.student_name,
-            'student_id': self.student_id
+            'student_id': self.student_id,
+            'name': self.student_name,
+            'email' : self.student_email,
+            'major' : self.major,
+            'year' : self.year,
         }
 
 class Course(db.Model):
@@ -25,16 +35,22 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     course_name = db.Column(db.String(100), nullable=False)
     course_code = db.Column(db.String(10), nullable=False) 
-    instructor_name = db.Column(db.String(100), nullable=False)
+    instructor = db.Column(db.String(100), nullable=False)
     max_students = db.Column(db.Integer, default=30)
+    description = db.Column(db.String(500), nullable=False)
+    course_credits = db.Column(db.Integer, default=1)
+    schedule = db.Column(db.String, nullable=False)
 
     def json(self):
         return {
             'id': self.id,
-            'course_name': self.course_name,
-            'course_code': self.course_code,
-            'instructor_name': self.instructor_name,
-            'max_students': self.max_students
+            'name': self.course_name,
+            'code': self.course_code,
+            'instructor': self.instructor,
+            'capacity': self.max_students,
+            'description': self.description,
+            'credits': self.course_credits,
+            'schedule': self.schedule,
         }
 
 class Enrollment(db.Model):
