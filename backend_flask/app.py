@@ -2,12 +2,17 @@ from flask import Flask, request, jsonify, make_response
 from models import db, Student, Course, Enrollment
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 
 # Load local .env in development (no-op if not present)
 load_dotenv()
 
 # Initialize app
 EnrollmentSystem = Flask(__name__)
+
+# Enable Cors
+CORS(EnrollmentSystem)
 
 # Get Postgres URL from either DB_URL or DATABASE_URL
 db_url = os.environ.get('DB_URL')
@@ -42,10 +47,21 @@ def create_student():
     """Adds a new student to the database"""
     try:
         data = request.get_json()
-        new_student = Student(data['student_id'], data.get('student_name', "")) # .get() optional parameter
+        # Accept either 'student_id' or 'id' for the external identifier (backwards-compatible)
+        student_identifier = data.get('student_id') or data.get('id')
+        if not student_identifier:
+            return make_response(jsonify({'message': "student_id (or id) is required"}), 400)
+
+        new_student = Student(
+            student_identifier,
+            data.get('name', ""),
+            data.get('email', ""),
+            data.get('major', ""),
+            data.get('year', 2025),
+        )
         db.session.add(new_student)
         db.session.commit()
-        return make_response(jsonify({'message': 'student created'}), 201)
+        return make_response(jsonify({'message': 'student created', 'student': new_student.json()}), 201)
     except:
         db.session.rollback()
         return make_response(jsonify({'message': 'error creating student'}), 500)
@@ -67,10 +83,17 @@ def update_student(student_id):
         data = request.get_json()
 
         # Update only provided fields
-        if 'student_id' in data:
-            student.student_id = data['student_id']
-        if 'student_name' in data:
-            student.student_name = data['student_name']
+        if 'id' in data:
+            student.student_id = data['id']
+        if 'name' in data:
+            student.student_name = data['name']
+        if 'email' in data:
+            # client should send 'email' key
+            student.student_email = data['email']
+        if 'major' in data:
+            student.major = data['major']
+        if 'year' in data:
+            student.year = data['year']
 
         db.session.commit()
         return make_response(jsonify({
@@ -104,11 +127,12 @@ def get_student_courses(student_id):
         student = Student.query.get_or_404(student_id)
         enrollments = [enrollment.json() for enrollment in student.enrollments]
         return make_response(jsonify({
-            'student': student.name,
+            # use the student_name field from the model
+            'student': student.student_name,
             'courses': enrollments
         }), 200)
     except Exception as e:
-        return make_response(jsonify({'message': 'error getting student courses', 'error': str(e)}), 500)
+        return make_response(jsonify({'message': 'error getting students in this course', 'error': str(e)}), 500)
 
 @EnrollmentSystem.route('/courses', methods=['GET'])
 def get_courses():
@@ -124,11 +148,15 @@ def create_course():
     """Adds a new course to the database"""
     try:
         data = request.get_json()
+        # construct using the actual column names from models.Course
         new_course = Course(
-            course_name=data['course_name'],
-            course_code=data['course_code'],
-            instructor_name=data['instructor_name'],
-            max_students=data.get('max_students', 30)
+            course_name=data['name'],
+            course_code=data['code'],
+            instructor=data.get('instructor', ''),
+            max_students=data.get('capacity', 30),
+            description=data.get('description', ''),
+            course_credits=data.get('credits', 1),
+            schedule=data.get('schedule', '')
         )
         db.session.add(new_course)
         db.session.commit()
@@ -142,37 +170,55 @@ def enroll_student():
     """Register a student for a course"""
     try:
         data = request.get_json()
-        student_id = data['student_id']
-        course_id = data['course_id']
-        
-        # Check if student exists
-        student = Student.query.get(student_id)
+        # Accept a DB PK or external identifier (be forgiving about types)
+        raw_student = data.get('student_id') or data.get('student') or data.get('studentId')
+        raw_course = data.get('course_id') or data.get('course') or data.get('courseId')
+
+        if raw_student is None or raw_course is None:
+            return make_response(jsonify({'message': 'student_id and course_id are required'}), 400)
+
+        # resolve student: try primary key then external student_id
+        student = None
+        try:
+            sid = int(raw_student)
+            student = Student.query.get(sid)
+        except Exception:
+            pass
+        if not student:
+            student = Student.query.filter_by(student_id=str(raw_student)).first()
         if not student:
             return make_response(jsonify({'message': 'student not found'}), 404)
-        
-        # Check if course exists
-        course = Course.query.get(course_id)
+
+        # resolve course: try primary key then course_code
+        course = None
+        try:
+            cid = int(raw_course)
+            course = Course.query.get(cid)
+        except Exception:
+            pass
+        if not course:
+            course = Course.query.filter_by(course_code=str(raw_course)).first()
         if not course:
             return make_response(jsonify({'message': 'course not found'}), 404)
         
         # Check if already enrolled
         existing_enrollment = Enrollment.query.filter_by(
-            student_id=student_id, 
-            course_id=course_id
+            student_id=student.id,
+            course_id=course.id,
         ).first()
         
         if existing_enrollment:
             return make_response(jsonify({'message': 'student already enrolled in this course'}), 400)
         
         # Check if course is full
-        active_enrollments = Enrollment.query.filter_by(course_id=course_id).count()
+        active_enrollments = Enrollment.query.filter_by(course_id=course.id).count()
         if active_enrollments >= course.max_students:
             return make_response(jsonify({'message': 'course is full'}), 400)
         
         # Create enrollment
         new_enrollment = Enrollment(
-            student_id=student_id,
-            course_id=course_id,
+            student_id=student.id,
+            course_id=course.id,
             semester=data.get('semester')
         )
         
@@ -207,7 +253,7 @@ def get_course_students(course_id):
         course = Course.query.get_or_404(course_id)
         students = [{
             'student_id': enrollment.student.student_id,
-            'name': enrollment.student.name
+            'name': enrollment.student.student_name
         } for enrollment in course.enrollments]
         
         return make_response(jsonify({
@@ -220,4 +266,4 @@ def get_course_students(course_id):
 
 
 if __name__ == '__main__':
-    EnrollmentSystem.run(debug=True)
+    EnrollmentSystem.run(debug=True, port=8000)
