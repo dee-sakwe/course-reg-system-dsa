@@ -38,8 +38,7 @@ class Student(db.Model):
             'name': self.student_name,
             'email' : self.student_email,
             'major' : self.major,
-            'year' : self.year,
-            'password': self.password
+            'year' : self.year
         }
 
 class Course(db.Model):
