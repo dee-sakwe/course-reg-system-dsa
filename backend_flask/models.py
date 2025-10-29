@@ -80,15 +80,17 @@ class Course(db.Model):
 class Enrollment(db.Model):
     __tablename__ = "enrollments"
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey("students.id"), nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey("courses.id"), nullable=False)
-
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
     enrolled_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     semester = db.Column(db.String(20))
-
-    student = db.relationship("Student", backref="enrollments")
-    course = db.relationship("Course", backref="enrollments")
-
+    # status: 'enrolled', 'completed', 'dropped', 'waitlisted'
+    status = db.Column(db.String(20), default='enrolled')
+    completed_date = db.Column(db.DateTime, nullable=True)
+    
+    student = db.relationship('Student', backref='enrollments')
+    course = db.relationship('Course', backref='enrollments')
+    
     def json(self):
         return {
             'id': self.id,
@@ -97,5 +99,9 @@ class Enrollment(db.Model):
             'course_name': self.course.course_name,
             'course_code': self.course.course_code,
             'enrolled_date': self.enrolled_date.isoformat() if self.enrolled_date else None,
-            'semester': self.semester
+            'semester': self.semester,
+            'status': self.status,
+            'completed_date': self.completed_date.isoformat() if self.completed_date else None,
         }
+
+    
