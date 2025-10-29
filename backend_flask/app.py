@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, make_response
 from models import db, Student, Course, Enrollment
+from sqlalchemy import or_
 import os
 from dotenv import load_dotenv
 from flask_cors import CORS
@@ -130,6 +131,29 @@ def get_courses():
         return make_response(jsonify([course.json() for course in courses]), 200)
     except Exception as e:
         return make_response(jsonify({'message': 'error getting courses', 'error': str(e)}), 500)
+
+
+@EnrollmentSystem.route('/courses/search', methods=['GET'])
+def search_courses():
+    """Search courses by query string across name, code, description, instructor."""
+    try:
+        data = request.get_json()
+        q = data.get('q', '')
+        q = (q or '').strip()
+        if q == '':
+            # no query — return all courses
+            courses = Course.query.all()
+        else:
+            pattern = f"%{q}%"
+            courses = Course.query.filter(or_(
+                Course.course_name.ilike(pattern),
+                Course.course_code.ilike(pattern),
+                Course.instructor.ilike(pattern),
+            )).all()
+
+        return make_response(jsonify([course.json() for course in courses]), 200)
+    except Exception as e:
+        return make_response(jsonify({'message': 'error searching courses', 'error': str(e)}), 500)
 
 @EnrollmentSystem.route('/courses', methods=['POST'])
 def create_course():
