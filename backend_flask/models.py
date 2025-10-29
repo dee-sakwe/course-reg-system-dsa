@@ -21,7 +21,8 @@ class Student(db.Model):
         self.major = major
         self.year = year
         self.password = password
-    
+    def __repr__(self):
+        return self.student_id
     def json(self):
         return {
             'id': self.id,

@@ -34,6 +34,16 @@ with EnrollmentSystem.app_context():
     except Exception as e:
         raise RuntimeError(f"Failed to create DB tables: {e}") from e
 
+login_manager = flask_login.LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(EnrollmentSystem)
+
+
+@login_manager.user_loader
+def load_user(student_id):
+    return Student.query.get(student_id)
+
+
 @EnrollmentSystem.route('/students', methods=['GET'])
 def get_students():
     """Get all students in the system"""
@@ -252,38 +262,42 @@ def register_student():
         student_identifier = data.get('student_id') or data.get('id')
         if not student_identifier:
             return make_response(jsonify({'message': "student_id (or id) is required"}), 400)
-        if Student.query.filter_by(student_identifier):
-            return make_response(jsonify({'message': 'Student with this ID already created'}))
+        # check for existing student by the external identifier
+        existing = Student.query.filter_by(student_id=student_identifier).first()
+        if existing:
+            return make_response(jsonify({'message': 'Student with this ID already created'}), 409)
+
+        # Create a Student using the model's constructor (no password field present in model)
         new_student = Student(
             student_identifier,
             data.get('name', ""),
             data.get('email', ""),
             data.get('major', ""),
             data.get('year', 2025),
-            data.get('password', "")
+            data.get('password')
         )
         db.session.add(new_student)
         db.session.commit()
         return make_response(jsonify({'message': 'student created', 'student': new_student.json()}), 201)
-    except:
+    except Exception as e:
         db.session.rollback()
-        return make_response(jsonify({'message': 'error creating student'}), 500)
+        return make_response(jsonify({'message': 'error creating student', 'error': str(e)}), 500)
 
-@EnrollmentSystem.route('/students_login', methods=['POST'])
+@EnrollmentSystem.route('/login_students', methods=['POST'])
 def login_student():
     """Creates a session for a student"""
     data = request.get_json()
     student_identifier = data.get('student_id') or data.get('id')
     password = data['password']
-    cur_student = Student.query.filter_by(student_identifier)
+    # resolve student by external identifier
+    cur_student = Student.query.filter_by(student_id=student_identifier).first()
     if not cur_student:
-        return make_response({'message': 'Student with thid ID does not exist'})
-    if cur_student and cur_student.password == password:
-        flask_login.login_user(cur_student)
-        return
-    return make_response({'message': 'Password does not match'})
+        return make_response({'message': 'Student with this ID does not exist'}, 404)
+    if cur_student.password == password:
+        return make_response({'message': 'Student Logged in'}, 201)
+    return make_response({'message': 'Wrong Password for Student'}, 400)
 
-@EnrollmentSystem.route('/student_logout', methods=['POST'])
+@EnrollmentSystem.route('/logout_students', methods=['POST'])
 def logout_student():
     """Logs a student out of their session"""
     flask_login.logout_user()
