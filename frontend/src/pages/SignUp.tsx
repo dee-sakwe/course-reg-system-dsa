@@ -21,6 +21,8 @@ const SignUp = () => {
   const [studentId, setStudentId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [major, setMajor] = useState("");
+  const [year, setYear] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -228,6 +230,40 @@ const SignUp = () => {
                           placeholder="e.g., student@gsumail.gram.edu"
                           type="email"
                           autoComplete="email"
+                        />
+                      </FormField>
+
+                      <FormField
+                        label="Major"
+                        description="Enter your major"
+                        errorText={
+                          attemptedSubmit && !major.trim()
+                            ? "Major is required"
+                            : undefined
+                        }
+                      >
+                        <Input
+                          value={major}
+                          onChange={({ detail }) => setMajor(detail.value)}
+                          placeholder="e.g., Computer Science"
+                          autoComplete="major"
+                        />
+                      </FormField>
+
+                      <FormField
+                        label="Year"
+                        description="Enter your year"
+                        errorText={
+                          attemptedSubmit && !year.trim()
+                            ? "Year is required"
+                            : undefined
+                        }
+                      >
+                        <Input
+                          value={year}
+                          onChange={({ detail }) => setYear(detail.value)}
+                          placeholder="e.g., 1 for Freshman, 2 for Sophomore, 3 for Junior, 4 for Senior"
+                          autoComplete="year"
                         />
                       </FormField>
 
