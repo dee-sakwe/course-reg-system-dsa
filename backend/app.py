@@ -3,6 +3,7 @@ from models import db, Student, Course, Enrollment
 from sqlalchemy import or_
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timezone
 from flask_cors import CORS
 import flask_login
 
@@ -167,9 +168,12 @@ def get_student_courses(student_id):
         student = Student.query.get_or_404(student_id)
         # Return full course objects for each enrollment so clients get the canonical Course shape
         courses = [enrollment.course.json() for enrollment in student.enrollments]
-        return make_response(
-            jsonify({"student": student.student_name, "courses": courses}), 200
-        )
+        enrollments_meta = [enrollment.json() for enrollment in student.enrollments]
+        return make_response(jsonify({
+            'student': student.student_name,
+            'courses': courses,
+            'enrollments': enrollments_meta
+        }), 200)
     except Exception as e:
         return make_response(
             jsonify(
@@ -299,6 +303,19 @@ def enroll_student():
         if not course:
             return make_response(jsonify({"message": "course not found"}), 404)
 
+        # Check prerequisites: student must have completed all prerequisite courses
+        missing = []
+        for prereq in course.prerequisites:
+            completed = Enrollment.query.filter_by(
+                student_id=student.id,
+                course_id=prereq.id,
+                status='completed'
+            ).first()
+            if not completed:
+                missing.append(prereq.course_name)
+        if missing:
+            return make_response(jsonify({'message': 'missing prerequisites', 'missing': missing}), 400)
+
         # Check if already enrolled
         existing_enrollment = Enrollment.query.filter_by(
             student_id=student.id,
@@ -306,12 +323,10 @@ def enroll_student():
         ).first()
 
         if existing_enrollment:
-            return make_response(
-                jsonify({"message": "student already enrolled in this course"}), 400
-            )
+            return make_response(jsonify({'message': 'student already enrolled in this course'}), 400)
 
-        # Check if course is full
-        active_enrollments = Enrollment.query.filter_by(course_id=course.id).count()
+        # Check if course is full (count only currently enrolled students)
+        active_enrollments = Enrollment.query.filter_by(course_id=course.id, status='enrolled').count()
         if active_enrollments >= course.max_students:
             return make_response(jsonify({"message": "course is full"}), 400)
 
@@ -340,7 +355,29 @@ def enroll_student():
         )
 
 
-@EnrollmentSystem.route("/enrollments/<int:enrollment_id>", methods=["DELETE"])
+@EnrollmentSystem.route('/enrollments/<int:enrollment_id>/status', methods=['PATCH'])
+def update_enrollment_status(enrollment_id):
+    """Update the status of an enrollment (e.g., mark completed)"""
+    try:
+        data = request.get_json()
+        new_status = data.get('status')
+        if new_status not in ('enrolled', 'completed', 'dropped', 'waitlisted'):
+            return make_response(jsonify({'message': 'invalid status'}), 400)
+
+        enrollment = Enrollment.query.get_or_404(enrollment_id)
+        enrollment.status = new_status
+        if new_status == 'completed':
+            enrollment.completed_date = datetime.now(timezone.utc)
+        else:
+            enrollment.completed_date = None
+
+        db.session.commit()
+        return make_response(jsonify({'message': 'status updated', 'enrollment': enrollment.json()}), 200)
+    except Exception as e:
+        db.session.rollback()
+        return make_response(jsonify({'message': 'error updating status', 'error': str(e)}), 500)
+
+@EnrollmentSystem.route('/enrollments/<int:enrollment_id>', methods=['DELETE'])
 def drop_course(enrollment_id):
     """Drop a course (delete enrollment)"""
     try:
