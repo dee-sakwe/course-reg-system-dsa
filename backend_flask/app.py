@@ -3,6 +3,7 @@ from models import db, Student, Course, Enrollment
 import os
 from dotenv import load_dotenv
 from flask_cors import CORS
+import flask_login
 
 
 # Load local .env in development (no-op if not present)
@@ -42,30 +43,6 @@ def get_students():
     except Exception as e:
         return make_response(jsonify({'message': 'error getting students', 'error': str(e)}), 500)
 
-@EnrollmentSystem.route('/students', methods = ['POST'])
-def create_student():
-    """Adds a new student to the database"""
-    try:
-        data = request.get_json()
-        # Accept either 'student_id' or 'id' for the external identifier (backwards-compatible)
-        student_identifier = data.get('student_id') or data.get('id')
-        if not student_identifier:
-            return make_response(jsonify({'message': "student_id (or id) is required"}), 400)
-
-        new_student = Student(
-            student_identifier,
-            data.get('name', ""),
-            data.get('email', ""),
-            data.get('major', ""),
-            data.get('year', 2025),
-        )
-        db.session.add(new_student)
-        db.session.commit()
-        return make_response(jsonify({'message': 'student created', 'student': new_student.json()}), 201)
-    except:
-        db.session.rollback()
-        return make_response(jsonify({'message': 'error creating student'}), 500)
-
 @EnrollmentSystem.route('/students/<int:student_id>', methods=['GET'])
 def get_student(student_id):
     """Query the database to get a a student by student_id"""
@@ -85,10 +62,11 @@ def update_student(student_id):
         # Update only provided fields
         if 'id' in data:
             student.student_id = data['id']
+        elif 'student_id' in data:
+            student.student_id = data['student_id']
         if 'name' in data:
             student.student_name = data['name']
         if 'email' in data:
-            # client should send 'email' key
             student.student_email = data['email']
         if 'major' in data:
             student.major = data['major']
@@ -125,11 +103,11 @@ def get_student_courses(student_id):
     """Get all courses for a specific student"""
     try:
         student = Student.query.get_or_404(student_id)
-        enrollments = [enrollment.json() for enrollment in student.enrollments]
+        # Return full course objects for each enrollment so clients get the canonical Course shape
+        courses = [enrollment.course.json() for enrollment in student.enrollments]
         return make_response(jsonify({
-            # use the student_name field from the model
             'student': student.student_name,
-            'courses': enrollments
+            'courses': courses
         }), 200)
     except Exception as e:
         return make_response(jsonify({'message': 'error getting students in this course', 'error': str(e)}), 500)
@@ -264,6 +242,52 @@ def get_course_students(course_id):
     except Exception as e:
         return make_response(jsonify({'message': 'error getting course students', 'error': str(e)}), 500)
 
+# Login, Register, Logout
+@EnrollmentSystem.route('/register_students', methods = ['POST'])
+def register_student():
+    """Adds a new student to the database"""
+    try:
+        data = request.get_json()
+        # Accept either 'student_id' or 'id' for the external identifier (backwards-compatible)
+        student_identifier = data.get('student_id') or data.get('id')
+        if not student_identifier:
+            return make_response(jsonify({'message': "student_id (or id) is required"}), 400)
+        if Student.query.filter_by(student_identifier):
+            return make_response(jsonify({'message': 'Student with this ID already created'}))
+        new_student = Student(
+            student_identifier,
+            data.get('name', ""),
+            data.get('email', ""),
+            data.get('major', ""),
+            data.get('year', 2025),
+            data.get('password', "")
+        )
+        db.session.add(new_student)
+        db.session.commit()
+        return make_response(jsonify({'message': 'student created', 'student': new_student.json()}), 201)
+    except:
+        db.session.rollback()
+        return make_response(jsonify({'message': 'error creating student'}), 500)
 
+@EnrollmentSystem.route('/students_login', methods=['POST'])
+def login_student():
+    """Creates a session for a student"""
+    data = request.get_json()
+    student_identifier = data.get('student_id') or data.get('id')
+    password = data['password']
+    cur_student = Student.query.filter_by(student_identifier)
+    if not cur_student:
+        return make_response({'message': 'Student with thid ID does not exist'})
+    if cur_student and cur_student.password == password:
+        flask_login.login_user(cur_student)
+        return
+    return make_response({'message': 'Password does not match'})
+
+@EnrollmentSystem.route('/student_logout', methods=['POST'])
+def logout_student():
+    """Logs a student out of their session"""
+    flask_login.logout_user()
+    return make_response({'message': 'Successfully Logged Out'})
+    
 if __name__ == '__main__':
     EnrollmentSystem.run(debug=True, port=8000)
