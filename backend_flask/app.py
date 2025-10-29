@@ -199,8 +199,7 @@ def get_courses():
 def search_courses():
     """Search courses by query string across name, code, description, instructor."""
     try:
-        data = request.get_json()
-        q = data.get("q", "")
+        q = request.args.get("q")
         q = (q or "").strip()
         if q == "":
             # no query — return all courses
