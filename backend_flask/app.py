@@ -45,6 +45,44 @@ def load_user(student_id):
     return Student.query.get(student_id)
 
 
+@EnrollmentSystem.route("/", methods=["GET"])
+def home():
+    """Root endpoint - API information"""
+    return make_response(
+        jsonify({
+            "message": "Student Enrollment System API",
+            "version": "1.0",
+            "endpoints": {
+                "students": {
+                    "GET /students": "Get all students",
+                    "POST /students": "Create a new student",
+                    "GET /students/<id>": "Get student by ID",
+                    "PATCH /students/<id>": "Update student",
+                    "DELETE /students/<id>": "Delete student",
+                    "GET /students/<id>/courses": "Get student's courses"
+                },
+                "courses": {
+                    "GET /courses": "Get all courses",
+                    "POST /courses": "Create a new course",
+                    "GET /courses/<id>/students": "Get students in a course"
+                },
+                "enrollments": {
+                    "POST /enrollments": "Enroll a student in a course",
+                    "DELETE /enrollments/<id>": "Drop a course"
+                },
+                "login": {
+                    "POST /login_students": "Login a student",
+                    "POST /logout_students": "Logout a student"
+                },
+                "register": {
+                    "POST /register_students": "Register a student"
+                }
+            }
+        }),
+        200
+    )
+
+
 @EnrollmentSystem.route("/students", methods=["GET"])
 def get_students():
     """Get all students in the system"""
