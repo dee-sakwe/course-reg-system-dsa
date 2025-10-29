@@ -9,16 +9,18 @@ class Student(db.Model):
     student_id = db.Column(db.String(15), nullable=False) 
     student_name = db.Column(db.String(100), nullable=False)
     student_email = db.Column(db.String(100), nullable=False)
-    major = db.Column(db.String(100), nullable=False)
-    year = db.Column(db.Integer, nullable=False)
+    major = db.Column(db.String(100), nullable=True)
+    year = db.Column(db.Integer, nullable=True)
+    password = db.Column(db.String(200), nullable=True)
 
 
-    def __init__(self, student_id, student_name, student_email, major, year):
+    def __init__(self, student_id, student_name, student_email, major, year, password):
         self.student_id = student_id
         self.student_name = student_name
         self.student_email = student_email
         self.major = major
         self.year = year
+        self.password = password
     
     def json(self):
         return {
@@ -28,6 +30,7 @@ class Student(db.Model):
             'email' : self.student_email,
             'major' : self.major,
             'year' : self.year,
+            'password': self.password
         }
 
 class Course(db.Model):
