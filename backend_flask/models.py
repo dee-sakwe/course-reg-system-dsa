@@ -11,7 +11,7 @@ course_prerequisites = db.Table(
 )
 
 class Student(db.Model):
-    __tablename__ = 'students'
+    __tablename__ = "students"
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.String(15), nullable=False) 
     student_name = db.Column(db.String(100), nullable=False)
@@ -43,8 +43,8 @@ class Student(db.Model):
         }
 
 class Course(db.Model):
-    __tablename__ = 'courses'
-    id = db.Column(db.Integer, primary_key = True)
+    __tablename__ = "courses"
+    id = db.Column(db.Integer, primary_key=True)
     course_name = db.Column(db.String(100), nullable=False)
     course_code = db.Column(db.String(10), nullable=False) 
     instructor = db.Column(db.String(100), nullable=False)
@@ -78,17 +78,17 @@ class Course(db.Model):
         }
 
 class Enrollment(db.Model):
-    __tablename__ = 'enrollments'
+    __tablename__ = "enrollments"
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey("students.id"), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey("courses.id"), nullable=False)
 
     enrolled_date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     semester = db.Column(db.String(20))
-    
-    student = db.relationship('Student', backref='enrollments')
-    course = db.relationship('Course', backref='enrollments')
-    
+
+    student = db.relationship("Student", backref="enrollments")
+    course = db.relationship("Course", backref="enrollments")
+
     def json(self):
         return {
             'id': self.id,
@@ -99,5 +99,3 @@ class Enrollment(db.Model):
             'enrolled_date': self.enrolled_date.isoformat() if self.enrolled_date else None,
             'semester': self.semester
         }
-
-    
