@@ -1,461 +1,732 @@
 [
-    {
-        "id": 3,
-        "name": "Principles of Biology -I",
-        "code": "BIOL 113",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 4,
-        "name": "Principles of Biology \u2013 I Lab",
-        "code": "BIOL 115",
-        "instructor": "",
-        "description": "",
-        "credits": 1,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 5,
-        "name": "First Year Experience I",
-        "code": "FYE 101",
-        "instructor": "",
-        "description": "",
-        "credits": 1,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 6,
-        "name": "First Year Experience II",
-        "code": "FYE102",
-        "instructor": "",
-        "description": "",
-        "credits": 1,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 7,
-        "name": "Freshman Composition",
-        "code": "ENG 101",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 8,
-        "name": "Freshman Composition",
-        "code": "ENG 102",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 9,
-        "name": "History of Western Civilization I",
-        "code": "HIST 103",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 10,
-        "name": "Modern World History",
-        "code": "HIST 104",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 11,
-        "name": "Computer Science  I",
-        "code": "CS 110",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 12,
-        "name": "Computer Science  II",
-        "code": "CS 120",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            11
-        ]
-    },
-    {
-        "id": 13,
-        "name": "Rising Junior Exam",
-        "code": "GET 300",
-        "instructor": "",
-        "description": "",
-        "credits": 0,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 14,
-        "name": "Probability and Statistics I",
-        "code": "MATH 273",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 15,
-        "name": "World Literature I",
-        "code": "ENG 200",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 16,
-        "name": "Intro. to Technical Writing",
-        "code": "ENG 207",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 17,
-        "name": "General Physics I",
-        "code": "PHYS 153",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 18,
-        "name": "General Physics Laboratory",
-        "code": "PHYS 153L",
-        "instructor": "",
-        "description": "",
-        "credits": 1,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 19,
-        "name": "Fund. of Public Speaking",
-        "code": "Theat  212",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 20,
-        "name": "Social, legal, and Ethical issues in Information Age.",
-        "code": "CS  201",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            12
-        ]
-    },
-    {
-        "id": 21,
-        "name": "Intro to Artificial Intelligence",
-        "code": "CS202",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            12
-        ]
-    },
-    {
-        "id": 22,
-        "name": "Discrete Structures",
-        "code": "CS 210",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            11
-        ]
-    },
-    {
-        "id": 23,
-        "name": "Comp. Org. & Architecture",
-        "code": "CS 325",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            12
-        ]
-    },
-    {
-        "id": 24,
-        "name": "Data Structures and Algorithm Analysis",
-        "code": "CS 236",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            12,
-            22
-        ]
-    },
-    {
-        "id": 25,
-        "name": "General Physics II",
-        "code": "PHYS 154",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 26,
-        "name": "General Physics Laboratory",
-        "code": "PHYS 154L",
-        "instructor": "",
-        "description": "",
-        "credits": 1,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 27,
-        "name": "Introduction to Social Science",
-        "code": "SOC 101",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 28,
-        "name": "Intro. to Linear Algebra",
-        "code": "MATH 309",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 29,
-        "name": "Foundations to Deep Learning",
-        "code": "CS 302",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 30,
-        "name": "Probability and Statistics II",
-        "code": "MATH  274",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 31,
-        "name": "Software Engineering",
-        "code": "CS 310",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 32,
-        "name": "Database Management Systems",
-        "code": "CS 320",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 33,
-        "name": "Programming Language Concepts",
-        "code": "CS 336",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 34,
-        "name": "Operating Systems",
-        "code": "CS 345",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 35,
-        "name": "Information Assurance and Security",
-        "code": "CS 311",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 36,
-        "name": "Intro. To Fine & Performing Arts",
-        "code": "ART 105",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 37,
-        "name": "Principles of Economics",
-        "code": "ECON 201",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 38,
-        "name": "Software Development",
-        "code": "CS 406",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 39,
-        "name": "Parallel Processing",
-        "code": "CS 450",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 40,
-        "name": "Computer Networks",
-        "code": "CS 419",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 41,
-        "name": "Computer Science Seminar",
-        "code": "CS 400",
-        "instructor": "",
-        "description": "",
-        "credits": 1,
-        "schedule": "",
-        "prerequisites": [
-            24
-        ]
-    },
-    {
-        "id": 42,
-        "name": "Major Elective",
-        "code": "CS 4xx",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 43,
-        "name": "Major Elective",
-        "code": "CS 4xx",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 44,
-        "name": "Foreign language",
-        "code": "SPAN101",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    },
-    {
-        "id": 45,
-        "name": "Foreign Language",
-        "code": "SPAN102",
-        "instructor": "",
-        "description": "",
-        "credits": 3,
-        "schedule": "",
-        "prerequisites": []
-    }
+  {
+    "id": 3,
+    "name": "Name:",
+    "code": "nan",
+    "instructor": "Dr. Amas Salibu",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 9:30AM-10:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 4,
+    "name": "Freashman",
+    "code": "nan",
+    "instructor": "Dr. Lucas Rivera",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MWF 9:00AM-9:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 5,
+    "name": "Principles of Biology -I",
+    "code": "BIOL 113",
+    "instructor": "Dr. Lucas Rivera",
+    "description": "An introduction to fundamental biological concepts including cells, genetics, and ecosystems.",
+    "credits": 3,
+    "schedule": "T 1:30PM-3:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 6,
+    "name": "Principles of Biology \u2013 I Lab",
+    "code": "BIOL 115",
+    "instructor": "Dr. Helen Moore",
+    "description": "An introduction to fundamental biological concepts including cells, genetics, and ecosystems.",
+    "credits": 1,
+    "schedule": "F 12:00PM-12:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 7,
+    "name": "First Year Experience I",
+    "code": "FYE 101",
+    "instructor": "Dr. Lucas Rivera",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 1,
+    "schedule": "MWF 8:00AM-8:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 8,
+    "name": "First Year Experience II",
+    "code": "FYE102",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 1,
+    "schedule": "MW 10:00AM-11:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 9,
+    "name": "Freshman Composition",
+    "code": "ENG 101",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "F 10:00AM-10:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 10,
+    "name": "Freshman Composition",
+    "code": "ENG 102",
+    "instructor": "Dr. Rebecca Turner",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MW 9:00AM-10:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 11,
+    "name": "History of Western Civilization I",
+    "code": "HIST 103",
+    "instructor": "Prof. David Kim",
+    "description": "Examines historical events, civilizations, and their impact on modern society.",
+    "credits": 3,
+    "schedule": "TR 3:30PM-4:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 12,
+    "name": "Modern World History",
+    "code": "HIST 104",
+    "instructor": "Dr. Evelyn Zhang",
+    "description": "Examines historical events, civilizations, and their impact on modern society.",
+    "credits": 3,
+    "schedule": "MWF 9:00AM-9:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 13,
+    "name": "Computer Science  I",
+    "code": "CS 110",
+    "instructor": "Dr. Helen Moore",
+    "description": "Introduction to computer programming concepts, algorithms, and problem-solving techniques.",
+    "credits": 3,
+    "schedule": "T 10:30AM-12:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 14,
+    "name": "Computer Science  II",
+    "code": "CS 120",
+    "instructor": "Prof. David Kim",
+    "description": "Introduction to computer programming concepts, algorithms, and problem-solving techniques.",
+    "credits": 3,
+    "schedule": "MWF 10:30AM-11:20AM",
+    "prerequisites": [13]
+  },
+  {
+    "id": 15,
+    "name": "TOTAL",
+    "code": "nan",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 30,
+    "schedule": "MWF 9:00AM-9:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 16,
+    "name": "Sophomore",
+    "code": "nan",
+    "instructor": "Prof. Isaac Brown",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 12:30PM-1:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 17,
+    "name": "Rising Junior Exam",
+    "code": "GET 300",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 0,
+    "schedule": "MW 4:00PM-5:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 18,
+    "name": "Probability and Statistics I",
+    "code": "MATH 273",
+    "instructor": "Prof. Isaac Brown",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MWF 2:00PM-2:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 19,
+    "name": "World Literature I",
+    "code": "ENG 200",
+    "instructor": "Dr. Charles Bennett",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 2:00PM-2:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 20,
+    "name": "Intro. to Technical Writing",
+    "code": "ENG 207",
+    "instructor": "Dr. Evelyn Zhang",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "T 4:00PM-5:30PM",
+    "prerequisites": []
+  },
+  {
+    "id": 21,
+    "name": "General Physics I",
+    "code": "PHYS 153",
+    "instructor": "Dr. Lucas Rivera",
+    "description": "Explores mechanics, motion, and basic thermodynamics principles.",
+    "credits": 3,
+    "schedule": "TR 9:30AM-10:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 22,
+    "name": "General Physics Laboratory",
+    "code": "PHYS 153L",
+    "instructor": "Dr. Charles Bennett",
+    "description": "Explores mechanics, motion, and basic thermodynamics principles.",
+    "credits": 1,
+    "schedule": "TR 10:00AM-10:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 23,
+    "name": "Fund. of Public Speaking",
+    "code": "Theat  212",
+    "instructor": "Dr. Helen Moore",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MWF 9:30AM-10:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 24,
+    "name": "Social, legal, and Ethical issues in Information Age.",
+    "code": "CS  201",
+    "instructor": "Dr. Amas Salibu",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MW 4:30PM-5:50PM",
+    "prerequisites": [14]
+  },
+  {
+    "id": 25,
+    "name": "Intro to Artificial Intelligence",
+    "code": "CS202",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 10:00AM-10:50AM",
+    "prerequisites": [14]
+  },
+  {
+    "id": 26,
+    "name": "Discrete Structures",
+    "code": "CS 210",
+    "instructor": "Dr. Charles Bennett",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "F 11:00AM-11:50AM",
+    "prerequisites": [13]
+  },
+  {
+    "id": 27,
+    "name": "Comp. Org. & Architecture",
+    "code": "CS 325",
+    "instructor": "Dr. Samuel Grant",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 4:30PM-5:20PM",
+    "prerequisites": [14]
+  },
+  {
+    "id": 28,
+    "name": "Data Structures and Algorithm Analysis",
+    "code": "CS 236",
+    "instructor": "Dr. Lucas Rivera",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "F 10:30AM-11:20AM",
+    "prerequisites": [14, 26]
+  },
+  {
+    "id": 29,
+    "name": "TOTAL",
+    "code": "nan",
+    "instructor": "Dr. Rebecca Turner",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 31,
+    "schedule": "F 8:00AM-8:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 30,
+    "name": "Junior",
+    "code": "nan",
+    "instructor": "Dr. Lucas Rivera",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 9:00AM-10:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 31,
+    "name": "General Physics II",
+    "code": "PHYS 154",
+    "instructor": "Dr. Helen Moore",
+    "description": "Explores mechanics, motion, and basic thermodynamics principles.",
+    "credits": 3,
+    "schedule": "TR 8:30AM-9:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 32,
+    "name": "General Physics Laboratory",
+    "code": "PHYS 154L",
+    "instructor": "Dr. Evelyn Zhang",
+    "description": "Explores mechanics, motion, and basic thermodynamics principles.",
+    "credits": 1,
+    "schedule": "T 8:00AM-9:30AM",
+    "prerequisites": []
+  },
+  {
+    "id": 33,
+    "name": "Introduction to Social Science",
+    "code": "SOC 101",
+    "instructor": "Prof. Isaac Brown",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "T 9:00AM-10:30AM",
+    "prerequisites": []
+  },
+  {
+    "id": 34,
+    "name": "Intro. to Linear Algebra",
+    "code": "MATH 309",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "F 4:30PM-5:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 35,
+    "name": "Foundations to Deep Learning",
+    "code": "CS 302",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "F 1:00PM-1:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 36,
+    "name": "Probability and Statistics II",
+    "code": "MATH  274",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "F 1:00PM-1:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 37,
+    "name": "Software Engineering",
+    "code": "CS 310",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 3:00PM-3:50PM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 38,
+    "name": "Database Management Systems",
+    "code": "CS 320",
+    "instructor": "Dr. Helen Moore",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "T 4:00PM-5:30PM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 39,
+    "name": "Programming Language Concepts",
+    "code": "CS 336",
+    "instructor": "Dr. Fatima Bello",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 10:30AM-11:20AM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 40,
+    "name": "Operating Systems",
+    "code": "CS 345",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "T 1:30PM-3:00PM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 41,
+    "name": "Information Assurance and Security",
+    "code": "CS 311",
+    "instructor": "Dr. Samuel Grant",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MWF 1:30PM-2:20PM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 42,
+    "name": "TOTAL",
+    "code": "nan",
+    "instructor": "Dr. Rebecca Turner",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 31,
+    "schedule": "T 9:30AM-11:00AM",
+    "prerequisites": []
+  },
+  {
+    "id": 43,
+    "name": "Senior",
+    "code": "nan",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "T 10:00AM-11:30AM",
+    "prerequisites": []
+  },
+  {
+    "id": 44,
+    "name": "Intro. To Fine & Performing Arts",
+    "code": "ART 105",
+    "instructor": "Dr. Samuel Grant",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MWF 9:30AM-10:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 45,
+    "name": "Principles of Economics",
+    "code": "ECON 201",
+    "instructor": "Dr. Samuel Grant",
+    "description": "Introduction to economic principles, market systems, and decision-making.",
+    "credits": 3,
+    "schedule": "MW 1:00PM-2:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 46,
+    "name": "Software Development",
+    "code": "CS 406",
+    "instructor": "Dr. Evelyn Zhang",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MWF 4:30PM-5:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 47,
+    "name": "Parallel Processing",
+    "code": "CS 450",
+    "instructor": "Dr. Samuel Grant",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 9:00AM-9:50AM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 48,
+    "name": "Computer Networks",
+    "code": "CS 419",
+    "instructor": "Dr. Amas Salibu",
+    "description": "Introduction to computer programming concepts, algorithms, and problem-solving techniques.",
+    "credits": 3,
+    "schedule": "T 1:00PM-2:30PM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 49,
+    "name": "Computer Science Seminar",
+    "code": "CS 400",
+    "instructor": "Dr. Anita Delgado",
+    "description": "Introduction to computer programming concepts, algorithms, and problem-solving techniques.",
+    "credits": 1,
+    "schedule": "F 11:30AM-12:20PM",
+    "prerequisites": [28]
+  },
+  {
+    "id": 50,
+    "name": "Major Elective",
+    "code": "CS 4xx",
+    "instructor": "Dr. Fatima Bello",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "MW 2:30PM-3:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 51,
+    "name": "Major Elective",
+    "code": "CS 4xx",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 4:30PM-5:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 52,
+    "name": "Foreign language",
+    "code": "SPAN101",
+    "instructor": "Dr. Rebecca Turner",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "TR 11:00AM-11:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 53,
+    "name": "Foreign Language",
+    "code": "SPAN102",
+    "instructor": "Dr. Evelyn Zhang",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 3,
+    "schedule": "T 3:30PM-5:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 54,
+    "name": "TOTAL",
+    "code": "nan",
+    "instructor": "Dr. Helen Moore",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 28,
+    "schedule": "MWF 1:30PM-2:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 55,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Fatima Bello",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 1:30PM-2:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 56,
+    "name": "TOTAL",
+    "code": "nan",
+    "instructor": "Dr. Fatima Bello",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": 120,
+    "schedule": "T 3:30PM-5:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 57,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Evelyn Zhang",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 12:00PM-1:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 58,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. Isaac Brown",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "TR 10:00AM-10:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 59,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. Isaac Brown",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 4:00PM-5:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 60,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MWF 12:00PM-12:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 61,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Charles Bennett",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "T 12:30PM-2:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 62,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "TR 3:00PM-3:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 63,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Amas Salibu",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "T 3:30PM-5:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 64,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "TR 11:30AM-12:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 65,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 10:30AM-11:50AM",
+    "prerequisites": []
+  },
+  {
+    "id": 66,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MWF 3:30PM-4:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 67,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. David Kim",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "T 3:30PM-5:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 68,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Charles Bennett",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MWF 1:00PM-1:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 69,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. Isaac Brown",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "T 2:30PM-4:00PM",
+    "prerequisites": []
+  },
+  {
+    "id": 70,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Amas Salibu",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "F 1:30PM-2:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 71,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Charles Bennett",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MW 3:30PM-4:50PM",
+    "prerequisites": []
+  },
+  {
+    "id": 72,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "TR 9:30AM-10:20AM",
+    "prerequisites": []
+  },
+  {
+    "id": 73,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Amas Salibu",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MWF 2:30PM-3:20PM",
+    "prerequisites": []
+  },
+  {
+    "id": 74,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Prof. James Okafor",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "T 12:00PM-1:30PM",
+    "prerequisites": []
+  },
+  {
+    "id": 75,
+    "name": "nan",
+    "code": "nan",
+    "instructor": "Dr. Rebecca Turner",
+    "description": "A foundational course providing theoretical and practical knowledge in the field.",
+    "credits": null,
+    "schedule": "MWF 12:00PM-12:50PM",
+    "prerequisites": []
+  }
 ]
