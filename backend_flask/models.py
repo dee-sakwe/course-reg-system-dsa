@@ -3,21 +3,43 @@ from datetime import timezone, datetime
 
 db = SQLAlchemy()
 
+# Association table for self-referential many-to-many prerequisites
+course_prerequisites = db.Table(
+    'course_prerequisites',
+    db.Column('course_id', db.Integer, db.ForeignKey('courses.id'), primary_key=True),
+    db.Column('prereq_id', db.Integer, db.ForeignKey('courses.id'), primary_key=True)
+)
+
 class Student(db.Model):
     __tablename__ = 'students'
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.String(15), nullable=False) # Compulsory
-    student_name = db.Column(db.String(100), nullable=True)
+    student_id = db.Column(db.String(15), nullable=False) 
+    student_name = db.Column(db.String(100), nullable=False)
+    student_email = db.Column(db.String(100), nullable=False)
+    major = db.Column(db.String(100), nullable=True)
+    year = db.Column(db.Integer, nullable=True)
+    password = db.Column(db.String(200), nullable=True)
 
-    def __init__(self, student_id, student_name):
+
+    def __init__(self, student_id, student_name, student_email, major, year, password):
         self.student_id = student_id
         self.student_name = student_name
-    
+        self.student_email = student_email
+        self.major = major
+        self.year = year
+        self.password = password
+
+    def __repr__(self):
+        return self.student_id
     def json(self):
         return {
             'id': self.id,
-            'student_name': self.student_name,
-            'student_id': self.student_id
+            'student_id': self.student_id,
+            'name': self.student_name,
+            'email' : self.student_email,
+            'major' : self.major,
+            'year' : self.year,
+            'password': self.password
         }
 
 class Course(db.Model):
@@ -25,16 +47,34 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     course_name = db.Column(db.String(100), nullable=False)
     course_code = db.Column(db.String(10), nullable=False) 
-    instructor_name = db.Column(db.String(100), nullable=False)
+    instructor = db.Column(db.String(100), nullable=False)
     max_students = db.Column(db.Integer, default=30)
+    description = db.Column(db.String(500), nullable=False)
+    course_credits = db.Column(db.Integer, default=1)
+    schedule = db.Column(db.String, nullable=False)
+
+    # self-referential many-to-many relationship: a course can have many prerequisites
+    prerequisites = db.relationship(
+        'Course',
+        secondary=course_prerequisites,
+        primaryjoin=id == course_prerequisites.c.course_id,
+        secondaryjoin=id == course_prerequisites.c.prereq_id,
+        backref='dependent_courses'
+    )
 
     def json(self):
         return {
             'id': self.id,
-            'course_name': self.course_name,
-            'course_code': self.course_code,
-            'instructor_name': self.instructor_name,
-            'max_students': self.max_students
+            'name': self.course_name,
+            'code': self.course_code,
+            'instructor': self.instructor,
+            'capacity': self.max_students,
+            'description': self.description,
+            'credits': self.course_credits,
+            'schedule': self.schedule,
+            'enrolled': len(self.enrollments),
+            # return prerequisites as an array of course codes for front-end friendly display
+            'prerequisites': [p.course_code for p in self.prerequisites]
         }
 
 class Enrollment(db.Model):
@@ -59,3 +99,5 @@ class Enrollment(db.Model):
             'enrolled_date': self.enrolled_date.isoformat() if self.enrolled_date else None,
             'semester': self.semester
         }
+
+    
