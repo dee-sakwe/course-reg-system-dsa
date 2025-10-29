@@ -1,432 +1,461 @@
 [
-  {
-    "id": 3,
-    "name": "Principles of Biology -I",
-    "code": "BIOL 113",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 4,
-    "name": "Principles of Biology \u2013 I Lab",
-    "code": "BIOL 115",
-    "instructor": "",
-    "description": "",
-    "credits": 1,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 5,
-    "name": "First Year Experience I",
-    "code": "FYE 101",
-    "instructor": "",
-    "description": "",
-    "credits": 1,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 6,
-    "name": "First Year Experience II",
-    "code": "FYE102",
-    "instructor": "",
-    "description": "",
-    "credits": 1,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 7,
-    "name": "Freshman Composition",
-    "code": "ENG 101",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 8,
-    "name": "Freshman Composition",
-    "code": "ENG 102",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 9,
-    "name": "History of Western Civilization I",
-    "code": "HIST 103",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 10,
-    "name": "Modern World History",
-    "code": "HIST 104",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 11,
-    "name": "Computer Science  I",
-    "code": "CS 110",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 12,
-    "name": "Computer Science  II",
-    "code": "CS 120",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [11]
-  },
-  {
-    "id": 13,
-    "name": "Rising Junior Exam",
-    "code": "GET 300",
-    "instructor": "",
-    "description": "",
-    "credits": 0,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 14,
-    "name": "Probability and Statistics I",
-    "code": "MATH 273",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 15,
-    "name": "World Literature I",
-    "code": "ENG 200",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 16,
-    "name": "Intro. to Technical Writing",
-    "code": "ENG 207",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 17,
-    "name": "General Physics I",
-    "code": "PHYS 153",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 18,
-    "name": "General Physics Laboratory",
-    "code": "PHYS 153L",
-    "instructor": "",
-    "description": "",
-    "credits": 1,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 19,
-    "name": "Fund. of Public Speaking",
-    "code": "Theat  212",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 20,
-    "name": "Social, legal, and Ethical issues in Information Age.",
-    "code": "CS  201",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [12]
-  },
-  {
-    "id": 21,
-    "name": "Intro to Artificial Intelligence",
-    "code": "CS202",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [12]
-  },
-  {
-    "id": 22,
-    "name": "Discrete Structures",
-    "code": "CS 210",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [11]
-  },
-  {
-    "id": 23,
-    "name": "Comp. Org. & Architecture",
-    "code": "CS 325",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [12]
-  },
-  {
-    "id": 24,
-    "name": "Data Structures and Algorithm Analysis",
-    "code": "CS 236",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [12, 22]
-  },
-  {
-    "id": 25,
-    "name": "General Physics II",
-    "code": "PHYS 154",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 26,
-    "name": "General Physics Laboratory",
-    "code": "PHYS 154L",
-    "instructor": "",
-    "description": "",
-    "credits": 1,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 27,
-    "name": "Introduction to Social Science",
-    "code": "SOC 101",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 28,
-    "name": "Intro. to Linear Algebra",
-    "code": "MATH 309",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 29,
-    "name": "Foundations to Deep Learning",
-    "code": "CS 302",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 30,
-    "name": "Probability and Statistics II",
-    "code": "MATH  274",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 31,
-    "name": "Software Engineering",
-    "code": "CS 310",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 32,
-    "name": "Database Management Systems",
-    "code": "CS 320",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 33,
-    "name": "Programming Language Concepts",
-    "code": "CS 336",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 34,
-    "name": "Operating Systems",
-    "code": "CS 345",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 35,
-    "name": "Information Assurance and Security",
-    "code": "CS 311",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 36,
-    "name": "Intro. To Fine & Performing Arts",
-    "code": "ART 105",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 37,
-    "name": "Principles of Economics",
-    "code": "ECON 201",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 38,
-    "name": "Software Development",
-    "code": "CS 406",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 39,
-    "name": "Parallel Processing",
-    "code": "CS 450",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 40,
-    "name": "Computer Networks",
-    "code": "CS 419",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 41,
-    "name": "Computer Science Seminar",
-    "code": "CS 400",
-    "instructor": "",
-    "description": "",
-    "credits": 1,
-    "schedule": "",
-    "prerequisites": [24]
-  },
-  {
-    "id": 42,
-    "name": "Major Elective",
-    "code": "CS 4xx",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 43,
-    "name": "Major Elective",
-    "code": "CS 4xx",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 44,
-    "name": "Foreign language",
-    "code": "SPAN101",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  },
-  {
-    "id": 45,
-    "name": "Foreign Language",
-    "code": "SPAN102",
-    "instructor": "",
-    "description": "",
-    "credits": 3,
-    "schedule": "",
-    "prerequisites": []
-  }
+    {
+        "id": 3,
+        "name": "Principles of Biology -I",
+        "code": "BIOL 113",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 4,
+        "name": "Principles of Biology \u2013 I Lab",
+        "code": "BIOL 115",
+        "instructor": "",
+        "description": "",
+        "credits": 1,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 5,
+        "name": "First Year Experience I",
+        "code": "FYE 101",
+        "instructor": "",
+        "description": "",
+        "credits": 1,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 6,
+        "name": "First Year Experience II",
+        "code": "FYE102",
+        "instructor": "",
+        "description": "",
+        "credits": 1,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 7,
+        "name": "Freshman Composition",
+        "code": "ENG 101",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 8,
+        "name": "Freshman Composition",
+        "code": "ENG 102",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 9,
+        "name": "History of Western Civilization I",
+        "code": "HIST 103",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 10,
+        "name": "Modern World History",
+        "code": "HIST 104",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 11,
+        "name": "Computer Science  I",
+        "code": "CS 110",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 12,
+        "name": "Computer Science  II",
+        "code": "CS 120",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            11
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Rising Junior Exam",
+        "code": "GET 300",
+        "instructor": "",
+        "description": "",
+        "credits": 0,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 14,
+        "name": "Probability and Statistics I",
+        "code": "MATH 273",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 15,
+        "name": "World Literature I",
+        "code": "ENG 200",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 16,
+        "name": "Intro. to Technical Writing",
+        "code": "ENG 207",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 17,
+        "name": "General Physics I",
+        "code": "PHYS 153",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 18,
+        "name": "General Physics Laboratory",
+        "code": "PHYS 153L",
+        "instructor": "",
+        "description": "",
+        "credits": 1,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 19,
+        "name": "Fund. of Public Speaking",
+        "code": "Theat  212",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 20,
+        "name": "Social, legal, and Ethical issues in Information Age.",
+        "code": "CS  201",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            12
+        ]
+    },
+    {
+        "id": 21,
+        "name": "Intro to Artificial Intelligence",
+        "code": "CS202",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            12
+        ]
+    },
+    {
+        "id": 22,
+        "name": "Discrete Structures",
+        "code": "CS 210",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            11
+        ]
+    },
+    {
+        "id": 23,
+        "name": "Comp. Org. & Architecture",
+        "code": "CS 325",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            12
+        ]
+    },
+    {
+        "id": 24,
+        "name": "Data Structures and Algorithm Analysis",
+        "code": "CS 236",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            12,
+            22
+        ]
+    },
+    {
+        "id": 25,
+        "name": "General Physics II",
+        "code": "PHYS 154",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 26,
+        "name": "General Physics Laboratory",
+        "code": "PHYS 154L",
+        "instructor": "",
+        "description": "",
+        "credits": 1,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 27,
+        "name": "Introduction to Social Science",
+        "code": "SOC 101",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 28,
+        "name": "Intro. to Linear Algebra",
+        "code": "MATH 309",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 29,
+        "name": "Foundations to Deep Learning",
+        "code": "CS 302",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 30,
+        "name": "Probability and Statistics II",
+        "code": "MATH  274",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 31,
+        "name": "Software Engineering",
+        "code": "CS 310",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 32,
+        "name": "Database Management Systems",
+        "code": "CS 320",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 33,
+        "name": "Programming Language Concepts",
+        "code": "CS 336",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 34,
+        "name": "Operating Systems",
+        "code": "CS 345",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 35,
+        "name": "Information Assurance and Security",
+        "code": "CS 311",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 36,
+        "name": "Intro. To Fine & Performing Arts",
+        "code": "ART 105",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 37,
+        "name": "Principles of Economics",
+        "code": "ECON 201",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 38,
+        "name": "Software Development",
+        "code": "CS 406",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 39,
+        "name": "Parallel Processing",
+        "code": "CS 450",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 40,
+        "name": "Computer Networks",
+        "code": "CS 419",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 41,
+        "name": "Computer Science Seminar",
+        "code": "CS 400",
+        "instructor": "",
+        "description": "",
+        "credits": 1,
+        "schedule": "",
+        "prerequisites": [
+            24
+        ]
+    },
+    {
+        "id": 42,
+        "name": "Major Elective",
+        "code": "CS 4xx",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 43,
+        "name": "Major Elective",
+        "code": "CS 4xx",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 44,
+        "name": "Foreign language",
+        "code": "SPAN101",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    },
+    {
+        "id": 45,
+        "name": "Foreign Language",
+        "code": "SPAN102",
+        "instructor": "",
+        "description": "",
+        "credits": 3,
+        "schedule": "",
+        "prerequisites": []
+    }
 ]
