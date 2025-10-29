@@ -3,6 +3,13 @@ from datetime import timezone, datetime
 
 db = SQLAlchemy()
 
+# Association table for self-referential many-to-many prerequisites
+course_prerequisites = db.Table(
+    'course_prerequisites',
+    db.Column('course_id', db.Integer, db.ForeignKey('courses.id'), primary_key=True),
+    db.Column('prereq_id', db.Integer, db.ForeignKey('courses.id'), primary_key=True)
+)
+
 class Student(db.Model):
     __tablename__ = 'students'
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +28,7 @@ class Student(db.Model):
         self.major = major
         self.year = year
         self.password = password
+
     def __repr__(self):
         return self.student_id
     def json(self):
@@ -45,6 +53,15 @@ class Course(db.Model):
     course_credits = db.Column(db.Integer, default=1)
     schedule = db.Column(db.String, nullable=False)
 
+    # self-referential many-to-many relationship: a course can have many prerequisites
+    prerequisites = db.relationship(
+        'Course',
+        secondary=course_prerequisites,
+        primaryjoin=id == course_prerequisites.c.course_id,
+        secondaryjoin=id == course_prerequisites.c.prereq_id,
+        backref='dependent_courses'
+    )
+
     def json(self):
         return {
             'id': self.id,
@@ -55,6 +72,9 @@ class Course(db.Model):
             'description': self.description,
             'credits': self.course_credits,
             'schedule': self.schedule,
+            'enrolled': len(self.enrollments),
+            # return prerequisites as an array of course codes for front-end friendly display
+            'prerequisites': [p.course_code for p in self.prerequisites]
         }
 
 class Enrollment(db.Model):
@@ -79,3 +99,5 @@ class Enrollment(db.Model):
             'enrolled_date': self.enrolled_date.isoformat() if self.enrolled_date else None,
             'semester': self.semester
         }
+
+    

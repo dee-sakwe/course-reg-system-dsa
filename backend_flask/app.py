@@ -170,6 +170,20 @@ def create_course():
             course_credits=data.get('credits', 1),
             schedule=data.get('schedule', '')
         )
+        # attach prerequisites if provided (expecting list of course IDs)
+        prereq_ids = data.get('prerequisites') or []
+        if isinstance(prereq_ids, list) and prereq_ids:
+            resolved = []
+            for pid in prereq_ids:
+                try:
+                    pid_int = int(pid)
+                except Exception:
+                    continue
+                p = Course.query.get(pid_int)
+                if p:
+                    resolved.append(p)
+            if resolved:
+                new_course.prerequisites = resolved
         db.session.add(new_course)
         db.session.commit()
         return make_response(jsonify({'message': 'course created', 'course': new_course.json()}), 201)
