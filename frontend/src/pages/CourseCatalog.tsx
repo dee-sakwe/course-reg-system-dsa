@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Header,
   SpaceBetween,
@@ -9,21 +9,70 @@ import {
 } from '@cloudscape-design/components';
 import CourseCard from '../components/CourseCard';
 import { Course } from '../types';
+import { courseService, enrollmentService } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 
 const CourseCatalog = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [courses] = useState<Course[]>([]);
-  const [loading] = useState(false);
-  const [error] = useState<string | null>(null);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { currentStudent } = useAuth();
 
-  const handleSearch = () => {
-    // Search functionality will be implemented when backend is ready
-    console.log('Searching for:', searchQuery);
+  // Fetch all courses on mount
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await courseService.getAllCourses();
+      setCourses(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load courses');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleEnroll = (courseId: string) => {
-    // Enrollment functionality will be implemented when backend is ready
-    console.log('Enrolling in course:', courseId);
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      fetchCourses();
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await courseService.searchCourses(searchQuery);
+      setCourses(data);
+    } catch (err: any) {
+      setError(err.message || 'Failed to search courses');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEnroll = async (courseId: string) => {
+    if (!currentStudent) {
+      setError('You must be logged in to enroll in courses');
+      return;
+    }
+
+    setError(null);
+    try {
+      await enrollmentService.enrollInCourse(
+        currentStudent.id.toString(),
+        courseId
+      );
+      alert('Successfully enrolled in course!');
+      // Refresh courses to update enrollment counts
+      fetchCourses();
+    } catch (err: any) {
+      setError(err.message || 'Failed to enroll in course');
+    }
   };
 
   return (

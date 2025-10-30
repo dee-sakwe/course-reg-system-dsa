@@ -5,7 +5,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   currentStudent: Student | null;
   login: (studentId: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  logout: () => Promise<void>;
   loading: boolean;
 }
 
@@ -54,41 +54,46 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = async (studentId: string, password: string): Promise<boolean> => {
-    // Simulate authentication - accept any non-empty credentials
     if (!studentId.trim() || !password.trim()) {
       return false;
     }
 
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    // Create a mock student object
-    const student: Student = {
-      id: studentId,
-      name: `${studentId}`,
-      email: `${studentId.toLowerCase()}@gsumail.gram.edu`,
-      major: 'Computer Science',
-      year: 3,
-      enrolledCourses: []
-    };
-
-    // Store in localStorage
-    localStorage.setItem('currentStudent', JSON.stringify(student));
-    localStorage.setItem('isAuthenticated', 'true');
-    
-    setCurrentStudent(student);
-    setIsAuthenticated(true);
-    
-    return true;
+    try {
+      const { authService } = await import('../services/api');
+      const result = await authService.login(studentId, password);
+      
+      if (result.student) {
+        // Store in localStorage
+        localStorage.setItem('currentStudent', JSON.stringify(result.student));
+        localStorage.setItem('isAuthenticated', 'true');
+        
+        setCurrentStudent(result.student);
+        setIsAuthenticated(true);
+        
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      console.error('Login error:', error);
+      return false;
+    }
   };
 
-  const logout = () => {
-    // Clear localStorage
-    localStorage.removeItem('currentStudent');
-    localStorage.removeItem('isAuthenticated');
-    
-    setCurrentStudent(null);
-    setIsAuthenticated(false);
+  const logout = async () => {
+    try {
+      const { authService } = await import('../services/api');
+      await authService.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Clear localStorage regardless of API call result
+      localStorage.removeItem('currentStudent');
+      localStorage.removeItem('isAuthenticated');
+      
+      setCurrentStudent(null);
+      setIsAuthenticated(false);
+    }
   };
 
   const value = {

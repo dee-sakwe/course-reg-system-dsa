@@ -79,20 +79,31 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      // Simulate account creation delay
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Import authService dynamically
+      const { authService } = await import("../services/api");
+      
+      // Register the student
+      const result = await authService.register(
+        studentId,
+        name,
+        email,
+        major,
+        parseInt(year) || 1,
+        password
+      );
 
-      // In a real app, you would call an API to create the account
-      // For now, we'll just log them in with the provided credentials
-      const success = await login(studentId, password);
-
-      if (success) {
-        navigate("/");
-      } else {
-        setError("An error occurred during sign up. Please try again.");
+      if (result.student) {
+        // Auto-login after successful registration
+        const success = await login(studentId, password);
+        
+        if (success) {
+          navigate("/");
+        } else {
+          setError("Account created but login failed. Please try logging in manually.");
+        }
       }
-    } catch (err) {
-      setError("An error occurred during sign up. Please try again.");
+    } catch (err: any) {
+      setError(err.message || "An error occurred during sign up. Please try again.");
     } finally {
       setLoading(false);
     }

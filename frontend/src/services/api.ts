@@ -1,6 +1,6 @@
 import { Course, Student, Enrollment } from "../types";
 
-const API_BASE_URL = "/api";
+const API_BASE_URL = "http://127.0.0.1:8000";
 
 export const courseService = {
   async getAllCourses(): Promise<Course[]> {
@@ -31,10 +31,21 @@ export const studentService = {
     return response.json();
   },
 
-  async getStudentSchedule(id: string): Promise<Course[]> {
-    const response = await fetch(`${API_BASE_URL}/students/${id}/schedule`);
-    if (!response.ok) throw new Error("Failed to fetch schedule");
+  async getStudentCourses(id: string): Promise<{ student: string; courses: Course[] }> {
+    const response = await fetch(`${API_BASE_URL}/students/${id}/courses`);
+    if (!response.ok) throw new Error("Failed to fetch student courses");
     return response.json();
+  },
+
+  async updateStudent(id: string, data: Partial<Student>): Promise<Student> {
+    const response = await fetch(`${API_BASE_URL}/students/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) throw new Error("Failed to update student");
+    const result = await response.json();
+    return result.student;
   },
 };
 
@@ -46,11 +57,14 @@ export const enrollmentService = {
     const response = await fetch(`${API_BASE_URL}/enrollments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // backend expects snake_case keys: student_id and course_id
       body: JSON.stringify({ student_id: studentId, course_id: courseId }),
     });
-    if (!response.ok) throw new Error("Failed to enroll in course");
-    return response.json();
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to enroll in course");
+    }
+    const result = await response.json();
+    return result.enrollment;
   },
 
   async dropCourse(enrollmentId: string): Promise<void> {
@@ -61,5 +75,73 @@ export const enrollmentService = {
       }
     );
     if (!response.ok) throw new Error("Failed to drop course");
+  },
+};
+
+export const authService = {
+  async login(studentId: string, password: string): Promise<{ message: string; student?: Student }> {
+    const response = await fetch(`${API_BASE_URL}/login_students`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ student_id: studentId, password }),
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || "Login failed");
+    }
+    
+    // Fetch full student data after successful login
+    // Get all students and find the one with matching student_id
+    const studentResponse = await fetch(`${API_BASE_URL}/students`);
+    if (!studentResponse.ok) {
+      throw new Error("Failed to fetch student data");
+    }
+    const students = await studentResponse.json();
+    const student = students.find((s: any) => s.student_id === studentId);
+    
+    if (!student) {
+      throw new Error("Student data not found");
+    }
+    
+    return { message: data.message, student };
+  },
+
+  async register(
+    studentId: string,
+    name: string,
+    email: string,
+    major: string,
+    year: number,
+    password: string
+  ): Promise<{ message: string; student: Student }> {
+    const response = await fetch(`${API_BASE_URL}/register_students`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        student_id: studentId,
+        name,
+        email,
+        major,
+        year,
+        password,
+      }),
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || "Registration failed");
+    }
+    
+    return data;
+  },
+
+  async logout(): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/logout_students`, {
+      method: "POST",
+    });
+    if (!response.ok) throw new Error("Logout failed");
   },
 };

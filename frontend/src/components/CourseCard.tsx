@@ -21,7 +21,7 @@ const CourseCard = ({ course, onEnroll, enrolled = false }: CourseCardProps) => 
               <Button
                 variant="primary"
                 disabled={isFull || enrolled}
-                onClick={() => onEnroll(course.id)}
+                onClick={() => onEnroll(course.id.toString())}
               >
                 {enrolled ? 'Enrolled' : isFull ? 'Full' : 'Enroll'}
               </Button>
