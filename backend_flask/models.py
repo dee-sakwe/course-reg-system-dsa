@@ -71,7 +71,8 @@ class Course(db.Model):
             'description': self.description,
             'credits': self.course_credits,
             'schedule': self.schedule,
-            'enrolled': len(self.enrollments),
+            # count only active enrollments for capacity calculations
+            'enrolled': len([e for e in self.enrollments if e.status == 'enrolled']),
             # return prerequisites as an array of course codes for front-end friendly display
             'prerequisites': [p.course_code for p in self.prerequisites]
         }

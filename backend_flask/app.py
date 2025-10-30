@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from models import db, Student, Course, Enrollment
-from sqlalchemy import or_
+from sqlalchemy import or_, func
+from sqlalchemy.orm import joinedload
 import os
 from dotenv import load_dotenv
 from datetime import datetime, timezone
@@ -418,6 +419,95 @@ def get_course_students(course_id):
         return make_response(
             jsonify({"message": "error getting course students", "error": str(e)}), 500
         )
+
+
+@EnrollmentSystem.route('/students/<int:student_id>/eligible-courses', methods=['GET'])
+def get_eligible_courses(student_id):
+    """Return courses the student is eligible to register for.
+
+    Semantics (current):
+    - Prerequisites are a flat AND list (every prerequisite must be satisfied).
+    - A prerequisite is satisfied if the student has an Enrollment with status 'completed' or 'enrolled' (in-progress allowed).
+    - Capacity is enforced by counting enrollments with status == 'enrolled'.
+    - Query params:
+      - include_full (bool): if true, include courses at capacity (mark full). Default false.
+      - include_advisory (bool): if true, include courses the student is not yet eligible for and list missing prerequisites. Default false.
+      - page, per_page: pagination
+    """
+    try:
+        student = Student.query.get_or_404(student_id)
+
+        # Parse query params
+        raw_include_full = request.args.get('include_full', 'false').lower()
+        raw_include_advisory = request.args.get('include_advisory', 'false').lower()
+        include_full = raw_include_full in ('1', 'true', 'yes')
+        include_advisory = raw_include_advisory in ('1', 'true', 'yes')
+        try:
+            page = int(request.args.get('page', 1))
+            per_page = int(request.args.get('per_page', 25))
+        except Exception:
+            return make_response(jsonify({'message': 'invalid pagination parameters'}), 400)
+
+        # 1) student's satisfied course ids (completed OR in-progress)
+        satisfied_rows = (
+            Enrollment.query
+            .with_entities(Enrollment.course_id)
+            .filter(Enrollment.student_id == student.id, Enrollment.status.in_(['completed', 'enrolled']))
+            .all()
+        )
+        satisfied_ids = set(r.course_id for r in satisfied_rows)
+
+        # 2) enrolled counts for all courses (single query)
+        enrolled_counts = dict(
+            Enrollment.query
+            .with_entities(Enrollment.course_id, func.count(Enrollment.id).label('cnt'))
+            .filter(Enrollment.status == 'enrolled')
+            .group_by(Enrollment.course_id)
+            .all()
+        )
+
+        # 3) fetch courses with prerequisites eager-loaded
+        courses = Course.query.options(joinedload(Course.prerequisites)).all()
+
+        results = []
+        for c in courses:
+            prereqs = c.prerequisites or []
+            missing = [p for p in prereqs if p.id not in satisfied_ids]
+            eligible_by_prereqs = (len(prereqs) == 0) or (len(missing) == 0)
+
+            enrolled_count = enrolled_counts.get(c.id, 0)
+            capacity = c.max_students or 0
+            full = enrolled_count >= capacity
+
+            eligible = eligible_by_prereqs and (not full or include_full)
+            if not eligible and not include_advisory:
+                continue
+
+            results.append({
+                'id': c.id,
+                'code': c.course_code,
+                'name': c.course_name,
+                'instructor': c.instructor,
+                'capacity': capacity,
+                'enrolled': enrolled_count,
+                'schedule': c.schedule,
+                'prerequisites': [{'id': p.id, 'code': p.course_code, 'name': p.course_name} for p in prereqs],
+                'eligible': eligible,
+                'full': full,
+                'missing_prerequisites': [{'id': p.id, 'code': p.course_code, 'name': p.course_name} for p in missing],
+                'note': 'course full' if full else None,
+            })
+
+        # pagination
+        total = len(results)
+        start = (page - 1) * per_page
+        end = start + per_page
+        paged = results[start:end]
+
+        return make_response(jsonify({'total': total, 'page': page, 'per_page': per_page, 'courses': paged}), 200)
+
+    except Exception as e:
+        return make_response(jsonify({'message': 'error getting eligible courses', 'error': str(e)}), 500)
 
 
 # Login, Register, Logout
