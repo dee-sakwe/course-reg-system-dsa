@@ -51,37 +51,37 @@ def load_user(student_id):
 def home():
     """Root endpoint - API information """
     return make_response(
-        jsonify({
-            "message": "Student Enrollment System API",
-            "version": "1.0",
-            "endpoints": {
-                "students": {
-                    "GET /students": "Get all students",
-                    "POST /students": "Create a new student",
-                    "GET /students/<id>": "Get student by ID",
-                    "PATCH /students/<id>": "Update student",
-                    "DELETE /students/<id>": "Delete student",
-                    "GET /students/<id>/courses": "Get student's courses"
+        jsonify(
+            {
+                "message": "Student Enrollment System API",
+                "version": "1.0",
+                "endpoints": {
+                    "students": {
+                        "GET /students": "Get all students",
+                        "POST /students": "Create a new student",
+                        "GET /students/<id>": "Get student by ID",
+                        "PATCH /students/<id>": "Update student",
+                        "DELETE /students/<id>": "Delete student",
+                        "GET /students/<id>/courses": "Get student's courses",
+                    },
+                    "courses": {
+                        "GET /courses": "Get all courses",
+                        "POST /courses": "Create a new course",
+                        "GET /courses/<id>/students": "Get students in a course",
+                    },
+                    "enrollments": {
+                        "POST /enrollments": "Enroll a student in a course",
+                        "DELETE /enrollments/<id>": "Drop a course",
+                    },
+                    "login": {
+                        "POST /login_students": "Login a student",
+                        "POST /logout_students": "Logout a student",
+                    },
+                    "register": {"POST /register_students": "Register a student"},
                 },
-                "courses": {
-                    "GET /courses": "Get all courses",
-                    "POST /courses": "Create a new course",
-                    "GET /courses/<id>/students": "Get students in a course"
-                },
-                "enrollments": {
-                    "POST /enrollments": "Enroll a student in a course",
-                    "DELETE /enrollments/<id>": "Drop a course"
-                },
-                "login": {
-                    "POST /login_students": "Login a student",
-                    "POST /logout_students": "Logout a student"
-                },
-                "register": {
-                    "POST /register_students": "Register a student"
-                }
             }
-        }),
-        200
+        ),
+        200,
     )
 
 
@@ -190,11 +190,16 @@ def get_student_courses(student_id):
         # Return full course objects for each enrollment so clients get the canonical Course shape
         courses = [enrollment.course.json() for enrollment in student.enrollments]
         enrollments_meta = [enrollment.json() for enrollment in student.enrollments]
-        return make_response(jsonify({
-            'student': student.student_name,
-            'courses': courses,
-            'enrollments': enrollments_meta
-        }), 200)
+        return make_response(
+            jsonify(
+                {
+                    "student": student.student_name,
+                    "courses": courses,
+                    "enrollments": enrollments_meta,
+                }
+            ),
+            200,
+        )
     except Exception as e:
         return make_response(
             jsonify(
@@ -336,18 +341,19 @@ def enroll_student():
         if missing:
             return make_response(jsonify({'message': 'missing prerequisites', 'missing': missing}), 400)
 
+
         # Check prerequisites: student must have completed all prerequisite courses
         missing = []
         for prereq in course.prerequisites:
             completed = Enrollment.query.filter_by(
-                student_id=student.id,
-                course_id=prereq.id,
-                status='completed'
+                student_id=student.id, course_id=prereq.id, status="completed"
             ).first()
             if not completed:
                 missing.append(prereq.course_name)
         if missing:
-            return make_response(jsonify({'message': 'missing prerequisites', 'missing': missing}), 400)
+            return make_response(
+                jsonify({"message": "missing prerequisites", "missing": missing}), 400
+            )
 
         # Check if already enrolled
         existing_enrollment = Enrollment.query.filter_by(
@@ -356,9 +362,14 @@ def enroll_student():
         ).first()
 
         if existing_enrollment:
-            return make_response(jsonify({'message': 'student already enrolled in this course'}), 400)
+            return make_response(
+                jsonify({"message": "student already enrolled in this course"}), 400
+            )
+
         # Check if course is full (count only currently enrolled students)
-        active_enrollments = Enrollment.query.filter_by(course_id=course.id, status='enrolled').count()
+        active_enrollments = Enrollment.query.filter_by(
+            course_id=course.id, status="enrolled"
+        ).count()
         if active_enrollments >= course.max_students:
             return make_response(jsonify({"message": "course is full"}), 400)
 
@@ -387,29 +398,34 @@ def enroll_student():
         )
 
 
-@EnrollmentSystem.route('/enrollments/<int:enrollment_id>/status', methods=['PATCH'])
+@EnrollmentSystem.route("/enrollments/<int:enrollment_id>/status", methods=["PATCH"])
 def update_enrollment_status(enrollment_id):
     """Update the status of an enrollment (e.g., mark completed)"""
     try:
         data = request.get_json()
-        new_status = data.get('status')
-        if new_status not in ('enrolled', 'completed', 'dropped', 'waitlisted'):
-            return make_response(jsonify({'message': 'invalid status'}), 400)
+        new_status = data.get("status")
+        if new_status not in ("enrolled", "completed", "dropped", "waitlisted"):
+            return make_response(jsonify({"message": "invalid status"}), 400)
 
         enrollment = Enrollment.query.get_or_404(enrollment_id)
         enrollment.status = new_status
-        if new_status == 'completed':
+        if new_status == "completed":
             enrollment.completed_date = datetime.now(timezone.utc)
         else:
             enrollment.completed_date = None
 
         db.session.commit()
-        return make_response(jsonify({'message': 'status updated', 'enrollment': enrollment.json()}), 200)
+        return make_response(
+            jsonify({"message": "status updated", "enrollment": enrollment.json()}), 200
+        )
     except Exception as e:
         db.session.rollback()
-        return make_response(jsonify({'message': 'error updating status', 'error': str(e)}), 500)
+        return make_response(
+            jsonify({"message": "error updating status", "error": str(e)}), 500
+        )
 
-@EnrollmentSystem.route('/enrollments/<int:enrollment_id>', methods=['DELETE'])
+
+@EnrollmentSystem.route("/enrollments/<int:enrollment_id>", methods=["DELETE"])
 def drop_course(enrollment_id):
     """Drop a course (delete enrollment)"""
     try:
@@ -452,11 +468,9 @@ def get_course_students(course_id):
             jsonify({"message": "error getting course students", "error": str(e)}), 500
         )
 
-
 @EnrollmentSystem.route('/students/<int:student_id>/eligible-courses', methods=['GET'])
 def get_eligible_courses(student_id):
     """Return courses the student is eligible to register for.
-
     Semantics (current):
     - Prerequisites are a flat AND list (every prerequisite must be satisfied).
     - A prerequisite is satisfied if the student has an Enrollment with status 'completed' or 'enrolled' (in-progress allowed).

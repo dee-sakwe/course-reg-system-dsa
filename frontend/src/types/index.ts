@@ -1,5 +1,5 @@
 export interface Course {
-  id: string;
+  id: number;
   code: string;
   name: string;
   description: string;
@@ -12,12 +12,13 @@ export interface Course {
 }
 
 export interface Student {
-  id: string;
+  id: number;
+  student_id: string;
   name: string;
   email: string;
   major: string;
   year: number;
-  enrolledCourses: string[];
+  password?: string;
 }
 
 export interface Address {
@@ -97,11 +98,13 @@ export interface StudentProfile extends Student {
 }
 
 export interface Enrollment {
-  id: string;
-  studentId: string;
-  courseId: string;
-  enrollmentDate: string;
-  status: 'enrolled' | 'waitlisted' | 'dropped';
+  id: number;
+  student_id: number;
+  course_id: number;
+  course_name: string;
+  course_code: string;
+  enrolled_date: string;
+  semester?: string;
 }
 
 export interface Schedule {

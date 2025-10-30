@@ -84,9 +84,10 @@ const AppContent = () => {
               { id: "profile", text: "Profile" },
               { id: "logout", text: "Log Out" },
             ],
-            onItemClick: (event) => {
+            onItemClick: async (event) => {
               if (event.detail.id === "logout") {
-                logout();
+                await logout();
+                navigate("/login");
               } else if (event.detail.id === "profile") {
                 navigate("/profile");
               }
