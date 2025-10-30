@@ -336,6 +336,19 @@ def enroll_student():
         if missing:
             return make_response(jsonify({'message': 'missing prerequisites', 'missing': missing}), 400)
 
+        # Check prerequisites: student must have completed all prerequisite courses
+        missing = []
+        for prereq in course.prerequisites:
+            completed = Enrollment.query.filter_by(
+                student_id=student.id,
+                course_id=prereq.id,
+                status='completed'
+            ).first()
+            if not completed:
+                missing.append(prereq.course_name)
+        if missing:
+            return make_response(jsonify({'message': 'missing prerequisites', 'missing': missing}), 400)
+
         # Check if already enrolled
         existing_enrollment = Enrollment.query.filter_by(
             student_id=student.id,
@@ -344,7 +357,6 @@ def enroll_student():
 
         if existing_enrollment:
             return make_response(jsonify({'message': 'student already enrolled in this course'}), 400)
-        
         # Check if course is full (count only currently enrolled students)
         active_enrollments = Enrollment.query.filter_by(course_id=course.id, status='enrolled').count()
         if active_enrollments >= course.max_students:
