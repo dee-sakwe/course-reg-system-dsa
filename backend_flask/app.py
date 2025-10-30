@@ -49,7 +49,7 @@ def load_user(student_id):
 
 @EnrollmentSystem.route("/", methods=["GET"])
 def home():
-    """Root endpoint - API information"""
+    """Root endpoint - API information """
     return make_response(
         jsonify({
             "message": "Student Enrollment System API",
