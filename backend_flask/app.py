@@ -108,6 +108,26 @@ def get_student(student_id):
             jsonify({"message": "Could not find Student in Database"}), 409
         )
 
+@EnrollmentSystem.route("/students/search/", methods=["GET"])
+def search_student():
+    """Searches database for a student by name or g_number(external id) based on search query"""
+    try:
+        g_number = request.args.get("student_id")
+        name = request.args.get("name")
+        q = (g_number or name or "").strip()
+        if q == "":
+            students = Student.query.all()
+        else:
+            pattern = f"%{q}%"
+            students =  Student.query.filter(
+                or_(
+                    Student.student_id.ilike(pattern),
+                    Student.student_name.ilike(pattern),
+                )
+            ).all()
+        return make_response(jsonify([student.json() for student in students]), 200)
+    except Exception as e:
+        return make_response(jsonify({"message": "error searching students", "error": str(e)}), 500)
 
 @EnrollmentSystem.route("/students/<int:student_id>", methods=["PATCH"])
 def update_student(student_id):
