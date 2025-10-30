@@ -225,7 +225,7 @@ def get_courses():
 def search_courses():
     """Search courses by query string across name, code, description, instructor."""
     try:
-        q = request.args.get("q", "")
+        q = request.args.get("q")
         q = (q or "").strip()
         if q == "":
             # no query — return all courses
@@ -327,6 +327,20 @@ def enroll_student():
             course = Course.query.filter_by(course_code=str(raw_course)).first()
         if not course:
             return make_response(jsonify({'message': 'course not found'}), 404)
+        
+        # Check prerequisites: student must have completed all prerequisite courses
+        missing = []
+        for prereq in course.prerequisites:
+            completed = Enrollment.query.filter_by(
+                student_id=student.id,
+                course_id=prereq.id,
+                status='completed'
+            ).first()
+            if not completed:
+                missing.append(prereq.course_name)
+        if missing:
+            return make_response(jsonify({'message': 'missing prerequisites', 'missing': missing}), 400)
+
 
         # Check prerequisites: student must have completed all prerequisite courses
         missing = []
@@ -540,6 +554,7 @@ def get_eligible_courses(student_id):
 
     except Exception as e:
         return make_response(jsonify({'message': 'error getting eligible courses', 'error': str(e)}), 500)
+
 
 # Login, Register, Logout
 @EnrollmentSystem.route("/register_students", methods=["POST"])

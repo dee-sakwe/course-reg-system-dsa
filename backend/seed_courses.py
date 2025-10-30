@@ -105,4 +105,3 @@ if __name__ == '__main__':
 
     seed_courses(drop_existing=args.drop)
     print('Seeding complete.')
-
