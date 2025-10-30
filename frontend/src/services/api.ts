@@ -3,6 +3,57 @@ import { Course, Student, Enrollment } from "../types";
 const API_BASE_URL = "http://127.0.0.1:8000";
 
 export const courseService = {
+  // Simple in-memory cache with sessionStorage hydration
+  _courseCache: null as null | { data: Course[]; fetchedAt: number },
+  _COURSE_TTL_MS: 5 * 60 * 1000,
+
+  _hydrateCache() {
+    if (this._courseCache) return;
+    try {
+      const raw = sessionStorage.getItem("coursesCache");
+      const ts = sessionStorage.getItem("coursesFetchedAt");
+      if (raw && ts) {
+        const data: Course[] = JSON.parse(raw);
+        const fetchedAt = Number(ts);
+        this._courseCache = { data, fetchedAt };
+      }
+    } catch {
+      // ignore
+    }
+  },
+
+  _isFresh(): boolean {
+    if (!this._courseCache) return false;
+    return Date.now() - this._courseCache.fetchedAt < this._COURSE_TTL_MS;
+  },
+
+  clearCourseCache() {
+    this._courseCache = null;
+    try {
+      sessionStorage.removeItem("coursesCache");
+      sessionStorage.removeItem("coursesFetchedAt");
+    } catch {
+      // ignore
+    }
+  },
+
+  async getAllCoursesCached(options?: { forceRefresh?: boolean }): Promise<Course[]> {
+    this._hydrateCache();
+    const forceRefresh = options?.forceRefresh === true;
+    if (!forceRefresh && this._isFresh() && this._courseCache) {
+      return this._courseCache.data;
+    }
+    const data = await this.getAllCourses();
+    this._courseCache = { data, fetchedAt: Date.now() };
+    try {
+      sessionStorage.setItem("coursesCache", JSON.stringify(data));
+      sessionStorage.setItem("coursesFetchedAt", String(this._courseCache.fetchedAt));
+    } catch {
+      // ignore storage errors
+    }
+    return data;
+  },
+
   async getAllCourses(): Promise<Course[]> {
     const response = await fetch(`${API_BASE_URL}/courses`);
     if (!response.ok) throw new Error("Failed to fetch courses");

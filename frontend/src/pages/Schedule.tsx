@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import {
   Header,
   SpaceBetween,
-  Container,
   Alert,
   Box,
 } from '@cloudscape-design/components';
@@ -41,15 +40,13 @@ const Schedule = () => {
   const totalCredits = enrolledCourses.reduce((sum, course) => sum + course.credits, 0);
 
   return (
-    <SpaceBetween size="l">
+    <SpaceBetween size="xxl">
       <Header
         variant="h1"
         description="View and manage your enrolled courses"
       >
         My Schedule
-      </Header>
-
-      <Container>
+      </Header>  
         <SpaceBetween size="m">
           <Box>
             <SpaceBetween size="xs">
@@ -78,7 +75,6 @@ const Schedule = () => {
             ))}
           </SpaceBetween>
         </SpaceBetween>
-      </Container>
     </SpaceBetween>
   );
 };

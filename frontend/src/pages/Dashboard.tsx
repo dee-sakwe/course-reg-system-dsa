@@ -35,7 +35,7 @@ const Dashboard = () => {
 
   return (
     <SpaceBetween size="l">
-      <Header variant="h1">Welcome to your Dashboard, {currentStudent?.name}!</Header>
+      <Header variant="h1">Welcome to your dashboard, {currentStudent?.name.split(' ')[0]}!</Header>
 
       <Container>
         <ColumnLayout columns={3} variant="text-grid">
