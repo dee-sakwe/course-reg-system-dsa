@@ -1,15 +1,5 @@
 [
   {
-    "id": 4,
-    "name": "Freshman",
-    "code": "nan",
-    "instructor": "Dr. Lucas Rivera",
-    "description": "A foundational course providing theoretical and practical knowledge in the field.",
-    "credits": null,
-    "schedule": "MWF 9:00AM-9:50AM",
-    "prerequisites": []
-  },
-  {
     "id": 5,
     "name": "Principles of Biology -I",
     "code": "BIOL 113",
@@ -51,7 +41,7 @@
   },
   {
     "id": 9,
-    "name": "Freshman Composition",
+    "name": "Freshman Composition I",
     "code": "ENG 101",
     "instructor": "Prof. James Okafor",
     "description": "A foundational course providing theoretical and practical knowledge in the field.",
@@ -61,7 +51,7 @@
   },
   {
     "id": 10,
-    "name": "Freshman Composition",
+    "name": "Freshman Composition II",
     "code": "ENG 102",
     "instructor": "Dr. Rebecca Turner",
     "description": "A foundational course providing theoretical and practical knowledge in the field.",
@@ -228,26 +218,6 @@
     "credits": 3,
     "schedule": "F 10:30AM-11:20AM",
     "prerequisites": [14, 26]
-  },
-  {
-    "id": 29,
-    "name": "TOTAL",
-    "code": "nan",
-    "instructor": "Dr. Rebecca Turner",
-    "description": "A foundational course providing theoretical and practical knowledge in the field.",
-    "credits": 31,
-    "schedule": "F 8:00AM-8:50AM",
-    "prerequisites": []
-  },
-  {
-    "id": 30,
-    "name": "Junior",
-    "code": "nan",
-    "instructor": "Dr. Lucas Rivera",
-    "description": "A foundational course providing theoretical and practical knowledge in the field.",
-    "credits": null,
-    "schedule": "MW 9:00AM-10:20AM",
-    "prerequisites": []
   },
   {
     "id": 31,
