@@ -1,15 +1,17 @@
-import { SpaceBetween, Box, Badge, ExpandableSection } from '@cloudscape-design/components';
+import { SpaceBetween, Box, Badge, ExpandableSection, Button } from '@cloudscape-design/components';
 import { Course } from '../types';
 
 interface CourseCardProps {
   course: Course;
   onEnroll?: (courseId: string) => void;
+  onDrop?: (enrollmentId: string) => void;
+  enrollmentId?: number;
   enrolled?: boolean;
 }
 
 // Repurposed this component to only be used for the schedule page
 // It is now an expandable section that displays the course details
-const CourseCard = ({ course }: CourseCardProps) => {
+const CourseCard = ({ course, onDrop, enrollmentId }: CourseCardProps) => {
   const availableSeats = course.capacity - course.enrolled;
   const isFull = availableSeats <= 0;
 
@@ -17,7 +19,13 @@ const CourseCard = ({ course }: CourseCardProps) => {
     <ExpandableSection
       variant="container"
       headerText={`${course.code}: ${course.name}`}
-
+      headerActions={
+        onDrop && enrollmentId ? (
+          <Button variant="normal" onClick={() => onDrop(String(enrollmentId))}>
+            Drop
+          </Button>
+        ) : undefined
+      }
     >
    
       <SpaceBetween size="l">

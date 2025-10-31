@@ -74,7 +74,7 @@ npm run lint
 
 ## Backend Setup
 
-The backend is built with FastAPI and Python.
+The backend is built with Flask and Python.
 
 ### Installation
 
@@ -95,22 +95,22 @@ The API will be available at `http://localhost:8000`
 
 ### API Documentation
 
-Once the backend is running, visit:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
-
 ## API Endpoints
 
 ### Courses
 - `GET /courses` - Get all courses
 - `GET /courses/{id}` - Get course by ID
-- `GET /courses/search?q=query` - Search courses
+- `GET /courses/{id}/students` - Get students in a course
 - `POST /courses` - Create a new course
 
 ### Students
+- `GET /students` - Get all students
 - `GET /students/{id}` - Get student by ID
-- `GET /students/{id}/schedule` - Get student's schedule
+- `GET /students/{id}/courses` - Get student's schedule
+- `PATCH /students/{id}` - Update a student's details
 - `POST /students` - Create a new student
+- `DELETE /students/{id}` - Delete a student
+
 
 ### Enrollments
 - `POST /enrollments` - Enroll in a course
@@ -147,25 +147,8 @@ Once the backend is running, visit:
 - **ESLint** - Code linting
 
 ### Backend
-- **FastAPI** - Modern Python web framework
-- **Pydantic** - Data validation
-- **Uvicorn** - ASGI server
+- **Flask** - Modern Python web framework
 - **SQLAlchemy** - ORM (ready for database integration)
-
-## Next Steps
-
-### For Frontend Developers
-1. Customize the UI components in `frontend/src/components/`
-2. Add new pages in `frontend/src/pages/`
-3. Update API service calls in `frontend/src/services/api.ts`
-4. Modify types in `frontend/src/types/index.ts`
-
-### For Backend Developers
-1. Implement database models and migrations
-2. Add business logic in `backend/services/`
-3. Extend API endpoints in `backend/api/`
-4. Add authentication and authorization
-5. Implement data validation and error handling
 
 ## Contributing
 
