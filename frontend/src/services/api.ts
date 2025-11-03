@@ -82,7 +82,7 @@ export const studentService = {
     return response.json();
   },
 
-  async getStudentCourses(id: string): Promise<{ student: string; courses: Course[] }> {
+  async getStudentCourses(id: string): Promise<{ student: string; courses: Course[]; enrollments: Enrollment[] }> {
     const response = await fetch(`${API_BASE_URL}/students/${id}/courses`);
     if (!response.ok) throw new Error("Failed to fetch student courses");
     return response.json();
