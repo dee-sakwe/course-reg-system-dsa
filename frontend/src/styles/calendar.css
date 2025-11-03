@@ -1,0 +1,94 @@
+/* FullCalendar Styles */
+/* FullCalendar v6 CSS - using CDN since CSS may not be bundled */
+@import url('https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.19/main.min.css');
+@import url('https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.19/main.min.css');
+@import url('https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.19/main.min.css');
+
+/* Basic calendar container styling to work with Cloudscape */
+.fc {
+  font-family: var(--font-family-base, inherit);
+}
+
+/* Ensure calendar doesn't overflow Cloudscape containers */
+.fc-toolbar {
+  margin-bottom: 1rem;
+}
+
+/* Match Cloudscape color scheme where possible */
+.fc-button-primary {
+  background-color: var(--color-background-button-primary-default, #0f7b0f);
+  border-color: var(--color-background-button-primary-default, #0f7b0f);
+}
+
+.fc-button-primary:hover {
+  background-color: var(--color-background-button-primary-hover, #0a5d0a);
+  border-color: var(--color-background-button-primary-hover, #0a5d0a);
+}
+
+/* Ensure calendar is responsive */
+.fc-view-harness {
+  overflow-x: auto;
+}
+
+/* Increase time slot height to give more space for events */
+.fc-timegrid-slot {
+  min-height: 60px !important;
+  height: 60px !important;
+}
+
+.fc-timegrid-slot-lane {
+  min-height: 60px !important;
+}
+
+/* Set minimum height for events to prevent text cutoff */
+.fc-event {
+  min-height: 2.5em !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 2px 4px !important;
+  overflow: visible !important;
+}
+
+.fc-event-time,
+.fc-event-title {
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow: visible !important;
+}
+
+/* For time grid view - ensure events are tall enough and can expand */
+.fc-timegrid-event {
+  min-height: 3em !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+.fc-timegrid-event-short {
+  min-height: 3em !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+/* Allow events to expand beyond slot height if needed and center content */
+.fc-timegrid-event-frame {
+  min-height: 3em !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+.fc-timegrid-event .fc-event-main {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* For day grid view (month) */
+.fc-daygrid-event {
+  min-height: 1.5em !important;
+}
+

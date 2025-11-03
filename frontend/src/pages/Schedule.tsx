@@ -7,8 +7,11 @@ import {
   Flashbar,
   Modal,
   Button,
+  Tabs,
+  Container,
 } from '@cloudscape-design/components';
 import CourseCard from '../components/CourseCard';
+import ClassCalendar from '../components/ClassCalendar';
 import { Course, Enrollment } from '../types';
 import { studentService, enrollmentService } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -129,43 +132,64 @@ const Schedule = () => {
           }))}
         />
       )}
-        <SpaceBetween size="m">
-          <Box>
-            <SpaceBetween size="xs">
-              <Box variant="awsui-key-label">Total Credits</Box>
-              <Box fontSize="heading-l" fontWeight="bold">
-                {totalCredits}
-              </Box>
-            </SpaceBetween>
-          </Box>
-
-          {error && (
-            <Alert type="error" dismissible onDismiss={() => setError(null)}>
-              {error}
-            </Alert>
-          )}
-
-          {!loading && !error && enrolledCourses.length === 0 && (
-            <Alert type="info">
-              You are not enrolled in any courses yet. Visit the Course Catalog to browse and enroll.
-            </Alert>
-          )}
-
-          <SpaceBetween size="m">
-            {enrolledCourses.map((course) => {
-              const enrollmentId = courseToEnrollmentMap.get(course.id);
-              return (
-                <CourseCard
-                  key={course.id}
-                  course={course}
-                  enrolled
-                  onDrop={(id) => openConfirmDrop(id, course)}
-                  enrollmentId={enrollmentId}
-                />
-              );
-            })}
+      <SpaceBetween size="m">
+        <Box>
+          <SpaceBetween size="xs">
+            <Box variant="awsui-key-label">Total Credits</Box>
+            <Box fontSize="heading-l" fontWeight="bold">
+              {totalCredits}
+            </Box>
           </SpaceBetween>
-        </SpaceBetween>
+        </Box>
+
+        {error && (
+          <Alert type="error" dismissible onDismiss={() => setError(null)}>
+            {error}
+          </Alert>
+        )}
+
+        {!loading && !error && enrolledCourses.length === 0 && (
+          <Alert type="info">
+            You are not enrolled in any courses yet. Visit the Course Catalog to browse and enroll.
+          </Alert>
+        )}
+
+        <Tabs
+          tabs={[
+            {
+              label: 'List',
+              id: 'list',
+              content: (
+                <SpaceBetween size="m">
+                  <SpaceBetween size="m">
+                    {enrolledCourses.map((course) => {
+                      const enrollmentId = courseToEnrollmentMap.get(course.id);
+                      return (
+                        <CourseCard
+                          key={course.id}
+                          course={course}
+                          enrolled
+                          onDrop={(id) => openConfirmDrop(id, course)}
+                          enrollmentId={enrollmentId}
+                        />
+                      );
+                    })}
+                  </SpaceBetween>
+                </SpaceBetween>
+              ),
+            },
+            {
+              label: 'Calendar',
+              id: 'calendar',
+              content: (
+                <Container>
+                  <ClassCalendar courses={enrolledCourses} loading={loading} />
+                </Container>
+              ),
+            },
+          ]}
+        />
+      </SpaceBetween>
     </SpaceBetween>
   );
 };

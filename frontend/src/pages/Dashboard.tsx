@@ -3,6 +3,8 @@ import { Container, Header, SpaceBetween, Box, ColumnLayout, Link} from '@clouds
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { courseService, studentService } from '../services/api';
+import ClassCalendar from '../components/ClassCalendar';
+import { Course } from '../types';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -10,12 +12,15 @@ const Dashboard = () => {
   const [totalCourses, setTotalCourses] = useState(0);
   const [enrolledCount, setEnrolledCount] = useState(0);
   const [totalCredits, setTotalCredits] = useState(0);
+  const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     fetchDashboardData();
   }, [currentStudent]);
 
   const fetchDashboardData = async () => {
+    setLoading(true);
     try {
       // Fetch total courses available
       const courses = await courseService.getAllCourses();
@@ -24,12 +29,15 @@ const Dashboard = () => {
       // Fetch enrolled courses for the current student
       if (currentStudent) {
         const data = await studentService.getStudentCourses(currentStudent.id.toString());
+        setEnrolledCourses(data.courses);
         setEnrolledCount(data.courses.length);
         const credits = data.courses.reduce((sum, course) => sum + course.credits, 0);
         setTotalCredits(credits);
       }
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,6 +74,10 @@ const Dashboard = () => {
           <Link onFollow={() => navigate('/schedule')}>View and manage your current course schedule</Link>
           <Link onFollow={() => navigate('/profile')}>Update your student profile and preferences</Link>
         </SpaceBetween>
+      </Container>
+
+      <Container header={<Header variant="h2">Upcoming Classes</Header>}>
+        <ClassCalendar courses={enrolledCourses} loading={loading} initialView="timeGridWeek" height={1000} />
       </Container>
     </SpaceBetween>
   );

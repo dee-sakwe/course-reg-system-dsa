@@ -129,7 +129,7 @@ const AppContent = () => {
           </Routes>
         }
         toolsHide
-        navigationWidth={250}
+        navigationWidth={200}
       />
     </>
   );
