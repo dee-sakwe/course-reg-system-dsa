@@ -88,6 +88,16 @@ export const studentService = {
     return response.json();
   },
 
+  async getEligibleCourses(id: string, includeFull: boolean = false, includeAdvisory: boolean = true): Promise<{ total: number; page: number; per_page: number; courses: any[] }> {
+    const params = new URLSearchParams({
+      include_full: includeFull ? 'true' : 'false',
+      include_advisory: includeAdvisory ? 'true' : 'false',
+    });
+    const response = await fetch(`${API_BASE_URL}/students/${id}/eligible-courses?${params}`);
+    if (!response.ok) throw new Error("Failed to fetch eligible courses");
+    return response.json();
+  },
+
   async updateStudent(id: string, data: Partial<Student>): Promise<Student> {
     const response = await fetch(`${API_BASE_URL}/students/${id}`, {
       method: "PATCH",
@@ -112,6 +122,12 @@ export const enrollmentService = {
     });
     if (!response.ok) {
       const error = await response.json();
+      // Include missing prerequisites in error message if available
+      if (error.missing && Array.isArray(error.missing)) {
+        const errorWithMissing = new Error(error.message || "Failed to enroll in course");
+        (errorWithMissing as any).missing = error.missing;
+        throw errorWithMissing;
+      }
       throw new Error(error.message || "Failed to enroll in course");
     }
     const result = await response.json();
