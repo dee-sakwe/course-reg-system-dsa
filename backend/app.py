@@ -37,6 +37,24 @@ with EnrollmentSystem.app_context():
     except Exception as e:
         raise RuntimeError(f"Failed to create DB tables: {e}") from e
 
+    # Migrate any existing plaintext passwords to secure hashes.
+    # This is a best-effort migration that won't prevent the app from
+    # starting if something goes wrong.
+    try:
+        students = Student.query.all()
+        changed = False
+        for s in students:
+            # If the password exists and does not look like a werkzeug hash,
+            # re-hash it using the model's setter which avoids double-hashing.
+            if s.password and not (isinstance(s.password, str) and s.password.startswith("pbkdf2:")):
+                s.set_password(s.password)
+                changed = True
+        if changed:
+            db.session.commit()
+    except Exception as e:
+        # Don't fail app startup for migration issues; print a diagnostic.
+        print(f"Password migration skipped or failed: {e}")
+
 login_manager = flask_login.LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(EnrollmentSystem)
@@ -605,7 +623,8 @@ def login_student():
     cur_student = Student.query.filter_by(student_id=student_identifier).first()
     if not cur_student:
         return make_response({"message": "Student with this ID does not exist"}, 404)
-    if cur_student.password == password:
+    # Use secure password verification
+    if cur_student.check_password(password):
         return make_response({"message": "Student Logged in"}, 201)
     return make_response({"message": "Wrong Password for Student"}, 400)
 
