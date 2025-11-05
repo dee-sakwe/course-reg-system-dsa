@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timezone, datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
@@ -27,10 +28,33 @@ class Student(db.Model):
         self.student_email = student_email
         self.major = major
         self.year = year
-        self.password = password
+        # Use setter to ensure passwords are stored as secure hashes.
+        # The setter will avoid double-hashing if the provided value already
+        # looks like a werkzeug-generated hash (starts with 'pbkdf2:').
+        self.set_password(password)
 
     def __repr__(self):
         return self.student_id
+
+    def set_password(self, password):
+        """Store a hashed password. If given value already looks like a
+        werkzeug hash (starts with 'pbkdf2:'), store it as-is to avoid
+        double-hashing.
+        """
+        if password is None:
+            self.password = None
+            return
+        if isinstance(password, str) and password.startswith("pbkdf2:"):
+            # Already hashed
+            self.password = password
+        else:
+            self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        """Verify a plaintext password against the stored hash."""
+        if not self.password or password is None:
+            return False
+        return check_password_hash(self.password, password)
 
     def json(self):
         return {
