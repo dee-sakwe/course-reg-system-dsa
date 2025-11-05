@@ -391,6 +391,44 @@ def enroll_student():
         if active_enrollments >= course.max_students:
             return make_response(jsonify({"message": "course is full"}), 400)
 
+        # Enforce per-semester credit limit (max 18 credits)
+        semester = data.get("semester")
+        try:
+            # Sum the credits of student's currently enrolled courses in the same semester
+            enrolled_credits_row = (
+                db.session.query(func.coalesce(func.sum(Course.course_credits), 0))
+                .join(Enrollment, Enrollment.course_id == Course.id)
+                .filter(
+                    Enrollment.student_id == student.id,
+                    Enrollment.status == "enrolled",
+                    Enrollment.semester == semester,
+                )
+                .scalar()
+            )
+        except Exception:
+            # Fallback: compute from loaded enrollments (less efficient but safe)
+            enrolled_credits_row = sum(
+                (e.course.course_credits or 0)
+                for e in student.enrollments
+                if e.status == "enrolled" and e.semester == semester
+            )
+
+        enrolled_credits = int(enrolled_credits_row or 0)
+        course_credits = course.course_credits or 0
+        MAX_CREDITS = 18
+        if enrolled_credits + course_credits > MAX_CREDITS:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "credit limit exceeded",
+                        "allowed": MAX_CREDITS,
+                        "current_enrolled_credits": enrolled_credits,
+                        "course_credits": course_credits,
+                    }
+                ),
+                400,
+            )
+
         # Create enrollment
         new_enrollment = Enrollment(
             student_id=student.id, course_id=course.id, semester=data.get("semester")
