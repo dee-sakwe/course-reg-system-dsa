@@ -37,6 +37,24 @@ with EnrollmentSystem.app_context():
     except Exception as e:
         raise RuntimeError(f"Failed to create DB tables: {e}") from e
 
+    # Migrate any existing plaintext passwords to secure hashes.
+    # This is a best-effort migration that won't prevent the app from
+    # starting if something goes wrong.
+    try:
+        students = Student.query.all()
+        changed = False
+        for s in students:
+            # If the password exists and does not look like a werkzeug hash,
+            # re-hash it using the model's setter which avoids double-hashing.
+            if s.password and not (isinstance(s.password, str) and s.password.startswith("pbkdf2:")):
+                s.set_password(s.password)
+                changed = True
+        if changed:
+            db.session.commit()
+    except Exception as e:
+        # Don't fail app startup for migration issues; print a diagnostic.
+        print(f"Password migration skipped or failed: {e}")
+
 login_manager = flask_login.LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(EnrollmentSystem)
@@ -373,6 +391,44 @@ def enroll_student():
         if active_enrollments >= course.max_students:
             return make_response(jsonify({"message": "course is full"}), 400)
 
+        # Enforce per-semester credit limit (max 18 credits)
+        semester = data.get("semester")
+        try:
+            # Sum the credits of student's currently enrolled courses in the same semester
+            enrolled_credits_row = (
+                db.session.query(func.coalesce(func.sum(Course.course_credits), 0))
+                .join(Enrollment, Enrollment.course_id == Course.id)
+                .filter(
+                    Enrollment.student_id == student.id,
+                    Enrollment.status == "enrolled",
+                    Enrollment.semester == semester,
+                )
+                .scalar()
+            )
+        except Exception:
+            # Fallback: compute from loaded enrollments (less efficient but safe)
+            enrolled_credits_row = sum(
+                (e.course.course_credits or 0)
+                for e in student.enrollments
+                if e.status == "enrolled" and e.semester == semester
+            )
+
+        enrolled_credits = int(enrolled_credits_row or 0)
+        course_credits = course.course_credits or 0
+        MAX_CREDITS = 18
+        if enrolled_credits + course_credits > MAX_CREDITS:
+            return make_response(
+                jsonify(
+                    {
+                        "message": "credit limit exceeded",
+                        "allowed": MAX_CREDITS,
+                        "current_enrolled_credits": enrolled_credits,
+                        "course_credits": course_credits,
+                    }
+                ),
+                400,
+            )
+
         # Create enrollment
         new_enrollment = Enrollment(
             student_id=student.id, course_id=course.id, semester=data.get("semester")
@@ -605,7 +661,8 @@ def login_student():
     cur_student = Student.query.filter_by(student_id=student_identifier).first()
     if not cur_student:
         return make_response({"message": "Student with this ID does not exist"}, 404)
-    if cur_student.password == password:
+    # Use secure password verification
+    if cur_student.check_password(password):
         return make_response({"message": "Student Logged in"}, 201)
     return make_response({"message": "Wrong Password for Student"}, 400)
 
